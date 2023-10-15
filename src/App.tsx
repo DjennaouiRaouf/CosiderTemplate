@@ -8,12 +8,9 @@ import LoginPage from "./Pages/LoginPage";
 function App() {
   return (
     <div className="App">
-
         <Router>
             <Routes>
                 <Route path="/" element={<LoginPage/>} />
-
-
             </Routes>
         </Router>
     </div>
