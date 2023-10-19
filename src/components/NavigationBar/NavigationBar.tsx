@@ -5,11 +5,21 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Avatar from "react-avatar";
 import logo from "./logo.png"
+import axios from "axios";
 type NavigationBarProps = {
   //
 };
 
 const NavigationBar: React.FC<any> = () => {
+
+  const logout = async() => {
+    const formData = new FormData();
+
+
+
+
+
+  }
   return (
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container >
@@ -45,9 +55,9 @@ const NavigationBar: React.FC<any> = () => {
                       href="#"
                   >
                       <span className="d-none d-lg-inline me-2 text-gray-600 small">
-                        Username
+                        {"username"}
                       </span>
-                    <Avatar name="Djennaoui raouf" size="40" round={true} src={""}
+                    <Avatar name={"username"} size="40" round={true} src={""}
 
                     />
                   </a>
@@ -65,7 +75,7 @@ const NavigationBar: React.FC<any> = () => {
                       &nbsp;Activity log
                     </a>
                     <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" onClick={logout}>
                       <i className="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400" />
                       &nbsp;Logout
                     </a>

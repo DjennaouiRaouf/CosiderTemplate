@@ -5,9 +5,7 @@ import {Carousel, Toast, ToastContainer} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import csrftoken from "../../utils/utils";
-type LoginFormProps = {
-  //
-};
+
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
@@ -17,6 +15,7 @@ const LoginForm: React.FC<any> = () => {
   const [color,setColor]=useState<string>("")
   const [icon,setIcon]=useState<string>("")
   const [show, setShow] = useState<boolean>(false);
+
 
   const handleLoginToast = () => {
     if(!show === false){
@@ -28,31 +27,31 @@ const LoginForm: React.FC<any> = () => {
   }
   const LoginToast = () => {
     return(
-          <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
-            <Toast onClose={handleLoginToast} show={show}  autohide={true} delay={3000}>
-              <Toast.Header>
-                <img
-                    src={login_toast}
-                    className="rounded me-2"
-                    alt=""
-                    width={30}
-                    height={30}
+        <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
+          <Toast onClose={handleLoginToast} show={show}  autohide={true} delay={3000}>
+            <Toast.Header>
+              <img
+                  src={login_toast}
+                  className="rounded me-2"
+                  alt=""
+                  width={30}
+                  height={30}
+              />
+              <strong className="me-auto" >Authentification</strong>
+            </Toast.Header>
+            <Toast.Body>
+              <p className="text-start" style={{ color: color }}>
+                <i
+                    className={icon}
+                    style={{ marginRight: 10 }}
                 />
-                <strong className="me-auto" >Authentification</strong>
-              </Toast.Header>
-              <Toast.Body>
-                <p className="text-start" style={{ color: color }}>
-                  <i
-                      className={icon}
-                      style={{ marginRight: 10 }}
-                  />
-                  {message}
-                </p>
-              </Toast.Body>
-            </Toast>
-          </ToastContainer>
+                {message}
+              </p>
+            </Toast.Body>
+          </Toast>
+        </ToastContainer>
     );
-    
+
   }
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`)
@@ -65,36 +64,34 @@ const LoginForm: React.FC<any> = () => {
         });
 
   }
-  
+
   const authentification = async() => {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-
-
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login/`,formData,{
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken,
-      },
-    }).then((response) => {
-      console.log(response.data);
-      setMessage(response.data.message)
-      setColor("rgb(0,153,34)")
-      setIcon("far fa-check-circle")
+    try {
+      const res = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/sm/login/`,
+          formData,
+          { withCredentials: true,
+            headers:{
+              'X-CSRFToken':csrftoken,
+            }
+          }
+      );
+      console.log(res.data.message);
+    } catch (error:any) {
+      console.log(error.response.data)
+      setMessage(error.response.data.message);
+      setColor("rgb(223,22,44)");
+      setIcon("far fa-times-circle");
       handleLoginToast();
+    }
 
-    }).catch((error) => {
-      console.error('Error:', error);
-      setMessage(error.response.data.message)
-      setColor("rgb(223,22,44)")
-      setIcon("far fa-times-circle")
-      handleLoginToast();
-    });
   }
 
   const onUsernameChange = (e:any) => {
-      setUsername(e.target.value);
+    setUsername(e.target.value);
   }
 
   const onPasswordChange = (e:any) => {
@@ -104,7 +101,9 @@ const LoginForm: React.FC<any> = () => {
   useEffect(() => {
     getImages();
 
-  },[]);
+
+
+  });
 
   return (
       <div className="container">
@@ -124,20 +123,20 @@ const LoginForm: React.FC<any> = () => {
               >
                 <Carousel className="w-100 d-block" controls={false} interval={3000} fade={true} indicators={true} >
                   {pics.map((item,index) => (
-                  <Carousel.Item key={index}>
+                      <Carousel.Item key={index}>
                         <img
-                             src={item.src}
-                             alt={""}
-                             height={500}
-                             className="d-block w-100"
+                            src={item.src}
+                            alt={""}
+                            height={500}
+                            className="d-block w-100"
                         />
-                    <Carousel.Caption style={{background:item.color}}>
-                      <h3>{item.caption}</h3>
-                      <p>
-                        {item.altText}
-                      </p>
-                    </Carousel.Caption>
-                  </Carousel.Item>
+                        <Carousel.Caption style={{background:item.color}}>
+                          <h3>{item.caption}</h3>
+                          <p>
+                            {item.altText}
+                          </p>
+                        </Carousel.Caption>
+                      </Carousel.Item>
                   ))}
                 </Carousel>
 
@@ -185,9 +184,9 @@ const LoginForm: React.FC<any> = () => {
                       <div className="custom-control custom-checkbox small" />
                     </div>
                     <button className="btn btn-primary btn-sm d-block btn-user w-100"
-                        type="submit"
-                        style={{ background: "#df162c", borderWidth: 0 }}
-                        onClick={authentification}>Login</button>
+                            type="submit"
+                            style={{ background: "#df162c", borderWidth: 0 }}
+                            onClick={authentification}>Login</button>
                     <hr />
                   </div>
 
