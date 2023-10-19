@@ -6,20 +6,48 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
+import {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
 type NavigationBarProps = {
   //
 };
 
 const NavigationBar: React.FC<any> = () => {
+  const[username,setUsername]=useState("");
+  const history=useHistory();
+  const logout = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`, {
+        withCredentials: true,
+      });
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const logout = async() => {
-    const formData = new FormData();
+  useEffect(() => {
+
+    const getUsername = async () => {
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`, {
+          withCredentials: true,
+        });
+        setUsername(res.data.username);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUsername();
+
+
+  });
 
 
 
 
 
-  }
+
   return (
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container >
@@ -55,9 +83,9 @@ const NavigationBar: React.FC<any> = () => {
                       href="#"
                   >
                       <span className="d-none d-lg-inline me-2 text-gray-600 small">
-                        {"username"}
+                        {username}
                       </span>
-                    <Avatar name={"username"} size="40" round={true} src={""}
+                    <Avatar name={username} size="40" round={true} src={""}
 
                     />
                   </a>

@@ -5,6 +5,7 @@ import {Carousel, Toast, ToastContainer} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import csrftoken from "../../utils/utils";
+import {useHistory} from "react-router-dom";
 
 
 const LoginForm: React.FC<any> = () => {
@@ -15,8 +16,8 @@ const LoginForm: React.FC<any> = () => {
   const [color,setColor]=useState<string>("")
   const [icon,setIcon]=useState<string>("")
   const [show, setShow] = useState<boolean>(false);
-
-
+  const history=useHistory();
+  const[isAuth,setIsAuth]=useState(false);
   const handleLoginToast = () => {
     if(!show === false){
       setMessage("");
@@ -79,7 +80,7 @@ const LoginForm: React.FC<any> = () => {
             }
           }
       );
-      console.log(res.data.message);
+      history.push('/home')
     } catch (error:any) {
       console.log(error.response.data)
       setMessage(error.response.data.message);
@@ -97,13 +98,28 @@ const LoginForm: React.FC<any> = () => {
   const onPasswordChange = (e:any) => {
     setPassword(e.target.value);
   }
+  const getSession = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/session/`, {
+        withCredentials: true,
+      });
 
+      setIsAuth(res.data.isAuthenticated);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getImages();
+    getSession();
+    if(isAuth){
+      history.push("/home")
+    }
 
 
 
-  });
+  },[isAuth]);
 
   return (
       <div className="container">
