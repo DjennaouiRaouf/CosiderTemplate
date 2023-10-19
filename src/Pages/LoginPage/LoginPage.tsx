@@ -1,6 +1,6 @@
 import * as React from "react";
 import LoginForm from "../../components/LoginForm";
-import {HashRouter as Router, Route, Switch, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import homePage from "../HomePage";
@@ -34,7 +34,7 @@ const LoginPage: React.FC<any> = () => {
       <Router>
           <Switch>
               <Route exact path='/' component={LoginForm}/>
-              <ProtectedRoute exact
+              <ProtectedRoute
                   path="/home"
                   component={homePage}
                   isAuthenticated={isAuth}
