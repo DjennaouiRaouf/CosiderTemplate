@@ -6,31 +6,15 @@ import ProtectedRoute from "../../components/ProtectedRoute";
 import homePage from "../HomePage";
 import axios from "axios";
 import HomePage from "../HomePage";
+import {Button} from "react-bootstrap";
 
 
 const LoginPage: React.FC<any> = () => {
     const[isAuth,setIsAuth]=useState(false);
 
-    useEffect(() => {
-        const getSession = async () => {
-            try {
-                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/session/`, {
-                    withCredentials: true,
-                });
-                setIsAuth(res.data.isAuthenticated);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getSession();
-
-
-    });
-
-
-
     return (
   <>
+      <Button>{isAuth}</Button>
       <Router>
           <Switch>
               <Route exact path='/' component={LoginForm}/>
