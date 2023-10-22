@@ -5,6 +5,9 @@ import {Carousel, Toast, ToastContainer} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
+
 
 
 
@@ -17,12 +20,13 @@ const LoginForm: React.FC<any> = () => {
   const [color,setColor]=useState<string>("")
   const [icon,setIcon]=useState<string>("")
   const [show, setShow] = useState<boolean>(false);
-
+  const navigate=useNavigate();
   const handleLoginToast = () => {
     if(!show === false){
       setMessage("");
-      setColor("")
-      setIcon("")
+      setColor("");
+      setIcon("");
+      window.location.href="/home";
     }
     setShow(!show);
   }
@@ -30,7 +34,7 @@ const LoginForm: React.FC<any> = () => {
     return(
         <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
           <Toast onClose={handleLoginToast} show={show}  autohide={true} delay={3000}>
-            <Toast.Header>
+            <Toast.Header closeButton={false}>
               <img
                   src={login_toast}
                   className="rounded me-2"
@@ -77,6 +81,11 @@ const LoginForm: React.FC<any> = () => {
           { withCredentials: true,
           }
       );
+      setMessage(res.data.message);
+      setColor("rgb(0,153,34)");
+      setIcon("far fa-check-circle");
+      handleLoginToast();
+
 
     } catch (error:any) {
       console.log(error.response.data)
@@ -85,7 +94,7 @@ const LoginForm: React.FC<any> = () => {
       setIcon("far fa-times-circle");
       handleLoginToast();
     }
-    window.location.href="/home";
+
 
   }
 

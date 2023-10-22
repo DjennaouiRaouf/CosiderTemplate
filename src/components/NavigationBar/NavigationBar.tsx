@@ -21,12 +21,6 @@ const NavigationBar: React.FC<any> = () => {
     try {
       const res = await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/sm/login/`,
-          {},
-          {
-            headers:{
-              'Authorization':csrftoken,
-            }
-          }
       );
     } catch (error:any) {
       console.log(error.response)

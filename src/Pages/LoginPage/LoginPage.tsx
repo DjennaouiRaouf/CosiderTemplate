@@ -1,14 +1,16 @@
 import * as React from "react";
-import LoginForm from "../../components/LoginForm";
+
 import {BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Outlet} from "react-router-dom";
 
 import {useEffect, useState} from "react";
 import Cookies from 'js-cookie';
 import HomePage from "../HomePage";
 import axios from "axios";
+import LoginForm from "../../components/LoginForm/LoginForm";
 
 
 const LoginPage: React.FC<any> = () => {
+
     return (
       <>
           <Router>
