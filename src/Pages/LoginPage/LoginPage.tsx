@@ -1,35 +1,34 @@
 import * as React from "react";
 import LoginForm from "../../components/LoginForm";
-import {BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Outlet} from "react-router-dom";
+
 import {useEffect, useState} from "react";
-import ProtectedRoute from "../../components/ProtectedRoute";
-import homePage from "../HomePage";
-import axios from "axios";
+import Cookies from 'js-cookie';
 import HomePage from "../HomePage";
-import {Button} from "react-bootstrap";
+import axios from "axios";
 
 
 const LoginPage: React.FC<any> = () => {
-    const[isAuth,setIsAuth]=useState(false);
-
     return (
-  <>
-      <Button>{isAuth}</Button>
-      <Router>
-          <Switch>
-              <Route exact path='/' component={LoginForm}/>
-              <ProtectedRoute
-                  path="/home"
-                  component={homePage}
-                  isAuthenticated={isAuth}
-                  authenticationPath="/"
-              />
+      <>
+          <Router>
 
-          </Switch>
-      </Router>
+              <Routes>
+                  <Route
+                      path="/"
+                      element={Cookies.get("__isAuth__")? <HomePage /> :  <LoginForm/>}
+                  />
+                  <Route
+                      path="/home"
+                      element={Cookies.get("__isAuth__")? <HomePage /> : <Navigate to={"/"} />}
+                  />
+              </Routes>
 
-  </>
-  );
+          </Router>
+
+
+      </>
+    );
 };
 
 export default LoginPage;

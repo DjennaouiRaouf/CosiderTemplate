@@ -7,22 +7,30 @@ import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+
 type NavigationBarProps = {
   //
 };
 
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
-  const history=useHistory();
+  const[csrftoken,setCsrftoken]=useState("");
+
   const logout = async () => {
+
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`, {
-        withCredentials: true,
-      });
-      history.push("/");
-    } catch (error) {
-      console.log(error);
+      const res = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/sm/login/`,
+          {},
+          {
+            headers:{
+              'Authorization':csrftoken,
+            }
+          }
+      );
+    } catch (error:any) {
+      console.log(error.response)
+
     }
   };
 
@@ -32,6 +40,9 @@ const NavigationBar: React.FC<any> = () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`, {
           withCredentials: true,
+          headers:{
+            'X-CSRFToken':csrftoken,
+          }
         });
         setUsername(res.data.username);
       } catch (error) {
@@ -39,9 +50,24 @@ const NavigationBar: React.FC<any> = () => {
       }
     };
     getUsername();
+    const getCsrfToken = async () => {
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/csrf/`, {
+          withCredentials: true,
+          headers:{
+            'X-CSRFToken':csrftoken,
+          }
+        });
+        setCsrftoken(res.data.csrftoken);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCsrfToken();
 
 
-  });
+
+  },[csrftoken]);
 
 
 
