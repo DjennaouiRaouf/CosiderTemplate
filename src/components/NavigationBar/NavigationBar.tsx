@@ -16,10 +16,14 @@ const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
   const history=useHistory();
   const logout = async () => {
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`, {withCredentials: true})
+        .then((response: any) => {
+          Cookies.remove("csrftoken")
+          history.push("/")
 
-    Cookies.remove("sessionid")
-    history.push("/")
-
+        })
+        .catch((error: any) => {
+        });
   };
   const getUsername = async () => {
 
