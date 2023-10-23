@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import "./Menu.css";
 import Cookies from "js-cookie";
 import {useHistory} from "react-router-dom";
-
+import contrat from "./menu/contrat.png";
 
 interface MenuItem {
   titre: string;
@@ -17,7 +17,7 @@ const Menu: React.FC<any> = () => {
   const history=useHistory();
   useEffect(() => {
    const items:MenuItem[]=[];
-   items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"});
+   items.push({titre:"Les Marchés",description:"-",image:contrat,url:"/"});
 
     items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"});
 
