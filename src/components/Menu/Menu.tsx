@@ -17,7 +17,13 @@ const Menu: React.FC<any> = () => {
   const history=useHistory();
   useEffect(() => {
    const items:MenuItem[]=[];
-   items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"})
+   items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"});
+
+    items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"});
+
+    items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"});
+
+    items.push({titre:"Les Marchés",description:"-",image:"789",url:"/"})
     setApps(items);
 
   },[]);
@@ -27,7 +33,6 @@ const Menu: React.FC<any> = () => {
   }
     return (
       <section style={{ background: "#f8f9fa" }}>
-        <h1>...</h1>
         <div className="container">
           <div className="row">
             {apps.map((item,index) => (
