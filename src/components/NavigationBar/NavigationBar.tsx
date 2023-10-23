@@ -7,61 +7,34 @@ import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Cookies from "js-cookie";
+import {useHistory} from "react-router-dom";
 
-type NavigationBarProps = {
-  //
-};
+
 
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
-  const[csrftoken,setCsrftoken]=useState("");
-
+  const history=useHistory();
   const logout = async () => {
 
-    try {
-      const res = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/sm/login/`,
-      );
-    } catch (error:any) {
-      console.log(error.response)
+    Cookies.remove("sessionid")
+    history.push("/")
 
-    }
   };
+  const getUsername = async () => {
+
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`, {withCredentials: true})
+        .then((response: any) => {
+          setUsername(response.data.username);
+        })
+        .catch((error: any) => {
+
+        });
+  }
 
   useEffect(() => {
-
-    const getUsername = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`, {
-          withCredentials: true,
-          headers:{
-            'X-CSRFToken':csrftoken,
-          }
-        });
-        setUsername(res.data.username);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getUsername();
-    const getCsrfToken = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/csrf/`, {
-          withCredentials: true,
-          headers:{
-            'X-CSRFToken':csrftoken,
-          }
-        });
-        setCsrftoken(res.data.csrftoken);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCsrfToken();
-
-
-
-  },[csrftoken]);
+  });
 
 
 

@@ -4,9 +4,10 @@ import login_toast from "./login-toast.png";
 import {Carousel, Toast, ToastContainer} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
-
-import {useNavigate} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
+
+
 
 
 
@@ -20,13 +21,15 @@ const LoginForm: React.FC<any> = () => {
   const [color,setColor]=useState<string>("")
   const [icon,setIcon]=useState<string>("")
   const [show, setShow] = useState<boolean>(false);
-  const navigate=useNavigate();
+
+  const history=useHistory();
   const handleLoginToast = () => {
     if(!show === false){
       setMessage("");
       setColor("");
       setIcon("");
-      window.location.href="/home";
+      history.push("/home");
+
     }
     setShow(!show);
   }
@@ -74,28 +77,19 @@ const LoginForm: React.FC<any> = () => {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-    try {
-      const res = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/sm/login/`,
-          formData,
-          { withCredentials: true,
-          }
-      );
-      setMessage(res.data.message);
-      setColor("rgb(0,153,34)");
-      setIcon("far fa-check-circle");
-      handleLoginToast();
-
-
-    } catch (error:any) {
-      console.log(error.response.data)
-      setMessage(error.response.data.message);
-      setColor("rgb(223,22,44)");
-      setIcon("far fa-times-circle");
-      handleLoginToast();
-    }
-
-
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{withCredentials:true})
+        .then((response:any) => {
+          setMessage(response.data.message);
+          setColor("rgb(0,153,34)");
+          setIcon("far fa-check-circle");
+          handleLoginToast();
+        })
+        .catch((error:any) => {
+          setMessage(error.response.data.message);
+          setColor("rgb(223,22,44)");
+          setIcon("far fa-times-circle");
+          handleLoginToast();
+        });
   }
 
 
@@ -108,7 +102,9 @@ const LoginForm: React.FC<any> = () => {
   }
   useEffect(() => {
     getImages();
-
+    if(Cookies.get("sessionid")){
+      history.push("/home");
+    }
 
 
   },[]);
