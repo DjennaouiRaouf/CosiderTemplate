@@ -1,29 +1,35 @@
 import * as React from "react";
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import LoginForm from "../../components/LoginForm/LoginForm";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import HomePage from "../HomePage/HomePage";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import SessionID from "../../components/SessionID/SessionID";
 
 
 
 const LoginPage: React.FC<any> = () => {
+
     return (
 
-        <Router>
-            <Switch>
+        <>
+            <SessionID/>
+            <Router>
+
+                <Switch>
+
+                    <Route exact path='/' component={LoginForm}/>
+                    <PrivateRoute
+                        path="/home"
+                        component={HomePage}
+                    />
 
 
-
-                <Route exact path='/' component={LoginForm}/>
-                <PrivateRoute
-                    path="/home"
-                    component={HomePage}
-                />
-
-
-            </Switch>
-        </Router>
+                </Switch>
+            </Router>
+        </>
     );
 };
 

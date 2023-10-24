@@ -6,6 +6,11 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
+import {useDispatch, useSelector} from "react-redux";
+import {openMessageToast} from "../Redux-Toolkit/Slices/MessageToastSlice";
+import MessageToast from "../MessageToast/MessageToast";
+import {RootState} from "../Redux-Toolkit/Store/Store";
+import {clearSessionID, setSessionID} from "../Redux-Toolkit/Slices/SessionIDSlice";
 
 
 
@@ -17,50 +22,11 @@ const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
   const [username,setUsername]=useState<string>("");
   const[password,setPassword]=useState<string>("");
-  const [message,setMessage]=useState<string>("")
-  const [color,setColor]=useState<string>("")
-  const [icon,setIcon]=useState<string>("")
-  const [show, setShow] = useState<boolean>(false);
-
+  const [isAuth, setIsAuth] = useState<any>(null);
+  const dispatch=useDispatch();
   const history=useHistory();
-  const handleLoginToast = () => {
-    if(!show === false){
-      setMessage("");
-      setColor("");
-      setIcon("");
-      history.push("/home");
+  const {session} = useSelector((state: RootState) => state.sessionid);
 
-    }
-    setShow(!show);
-  }
-  const LoginToast = () => {
-    return(
-        <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
-          <Toast onClose={handleLoginToast} show={show}  autohide={true} delay={3000}>
-            <Toast.Header closeButton={false}>
-              <img
-                  src={login_toast}
-                  className="rounded me-2"
-                  alt=""
-                  width={30}
-                  height={30}
-              />
-              <strong className="me-auto" >Authentification</strong>
-            </Toast.Header>
-            <Toast.Body>
-              <p className="text-start" style={{ color: color }}>
-                <i
-                    className={icon}
-                    style={{ marginRight: 10 }}
-                />
-                {message}
-              </p>
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-    );
-
-  }
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`)
         .then((response) => {
@@ -73,23 +39,32 @@ const LoginForm: React.FC<any> = () => {
 
   }
 
+  const getSession = async () => {
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/session/`, {withCredentials: true})
+        .then((response: any) => {
+          dispatch(setSessionID(response.data.session_id));
+
+
+        })
+        .catch((error: any) => {
+          dispatch(clearSessionID());
+        });
+
+  };
+
   const authentification = async() => {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{withCredentials:true})
         .then((response:any) => {
-          setMessage(response.data.message);
-          setColor("rgb(0,153,34)");
-          setIcon("far fa-check-circle");
-          handleLoginToast();
+          getSession();
+          history.push("/home");
         })
         .catch((error:any) => {
-          setMessage(error.response.data.message);
-          setColor("rgb(223,22,44)");
-          setIcon("far fa-times-circle");
-          handleLoginToast();
+          dispatch(openMessageToast({ titre: "Authentification",color:"rgb(223,22,44)","message":error.response.data.message,"icon":"far fa-times-circle" }))
         });
+
   }
 
 
@@ -100,17 +75,27 @@ const LoginForm: React.FC<any> = () => {
   const onPasswordChange = (e:any) => {
     setPassword(e.target.value);
   }
+
   useEffect(() => {
     getImages();
-    if(Cookies.get("sessionid")){
+    if(session){
       history.push("/home");
     }
 
-
-  },[]);
+  },[pics]);
 
   return (
-      <div className="container">
+<div>
+      <div className="container"  style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: "50%",
+        transform: "translateY(-50%)",
+        msTransform: "translateY(-50%)",
+        WebkitTransform: "translateY(-50%)",
+        OTransform: "translateY(-50%)"
+      }}>
         <div
             className="card shadow-lg o-hidden border-0 my-5"
             style={{ height: 500 }}
@@ -204,8 +189,10 @@ const LoginForm: React.FC<any> = () => {
             </div>
           </div>
         </div>
-        <LoginToast/>
+
       </div>
+  <MessageToast/>
+</div>
 
   );
 };
