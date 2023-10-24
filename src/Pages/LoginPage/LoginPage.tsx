@@ -1,35 +1,41 @@
 import * as React from "react";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Routes,Navigate } from 'react-router-dom';
 
 import LoginForm from "../../components/LoginForm/LoginForm";
-import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import HomePage from "../HomePage/HomePage";
+import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
-import axios from "axios";
-import SessionID from "../../components/SessionID/SessionID";
-import LoginRoute from "../../components/LoginRoute/LoginRoute";
+
 
 
 
 const LoginPage: React.FC<any> = () => {
-
     return (
-
         <>
-            <SessionID/>
-            <Router>
-
-                <Switch>
-
-                    <LoginRoute exact path='/' component={LoginForm}/>
-                    <PrivateRoute
-                        path="/home"
-                        component={HomePage}
+            <BrowserRouter>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            ! Cookies.get("__SID__") ? (
+                                <LoginForm />
+                            ) : (
+                                <Navigate to="/home" replace />
+                            )
+                        }
                     />
-
-
-                </Switch>
-            </Router>
+                    <Route
+                        path="/home"
+                        element={
+                             Cookies.get("__SID__")? (
+                                <HomePage />
+                            ) : (
+                                <Navigate to="/" replace />
+                            )
+                        }
+                    />
+                </Routes>
+            </BrowserRouter>
         </>
     );
 };

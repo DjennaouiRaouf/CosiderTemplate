@@ -4,13 +4,10 @@ import login_toast from "./login-toast.png";
 import {Carousel, Toast, ToastContainer} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {useHistory} from "react-router-dom";
-import Cookies from "js-cookie";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {openMessageToast} from "../Redux-Toolkit/Slices/MessageToastSlice";
 import MessageToast from "../MessageToast/MessageToast";
-import {RootState} from "../Redux-Toolkit/Store/Store";
-import {clearSessionID, setSessionID} from "../Redux-Toolkit/Slices/SessionIDSlice";
+
 
 
 
@@ -23,8 +20,6 @@ const LoginForm: React.FC<any> = () => {
   const [username,setUsername]=useState<string>("");
   const[password,setPassword]=useState<string>("");
   const dispatch=useDispatch();
-  const history=useHistory();
-  const {session} = useSelector((state: RootState) => state.sessionid);
 
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`)
@@ -38,18 +33,7 @@ const LoginForm: React.FC<any> = () => {
 
   }
 
-  const getSession = async () => {
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/session/`, {withCredentials: true})
-        .then((response: any) => {
-          dispatch(setSessionID(response.data.session_id));
 
-
-        })
-        .catch((error: any) => {
-          dispatch(clearSessionID());
-        });
-
-  };
 
   const authentification = async() => {
     const formData = new FormData();
@@ -57,12 +41,12 @@ const LoginForm: React.FC<any> = () => {
     formData.append('password', password);
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{withCredentials:true})
         .then((response:any) => {
-          getSession();
-          history.push("/home");
+          window.location.href="/home";
         })
         .catch((error:any) => {
           dispatch(openMessageToast({ titre: "Authentification",color:"rgb(223,22,44)","message":error.response.data.message,"icon":"far fa-times-circle" }))
         });
+
 
   }
 
@@ -79,7 +63,7 @@ const LoginForm: React.FC<any> = () => {
     getImages();
 
 
-  });
+  },[pics]);
 
   return (
 
