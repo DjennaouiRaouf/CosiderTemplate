@@ -17,7 +17,7 @@ const LoginPage: React.FC<any> = () => {
                     <Route
                         path="/"
                         element={
-                            ! Cookies.get("__SID__") ? (
+                            ! Cookies.get("sessionid") ? (
                                 <LoginForm />
                             ) : (
                                 <Navigate to="/home" replace />
@@ -27,7 +27,7 @@ const LoginPage: React.FC<any> = () => {
                     <Route
                         path="/home"
                         element={
-                             Cookies.get("__SID__")? (
+                             Cookies.get("sessionid")? (
                                 <HomePage />
                             ) : (
                                 <Navigate to="/" replace />
