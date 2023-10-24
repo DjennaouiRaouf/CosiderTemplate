@@ -29,7 +29,7 @@ const SessionID: React.FC<any> = () => {
 
     },[]);
 
-    return <>{session}</>;
+    return <></>;
 };
 
 export default SessionID;

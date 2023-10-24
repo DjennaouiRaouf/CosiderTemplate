@@ -22,7 +22,6 @@ const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
   const [username,setUsername]=useState<string>("");
   const[password,setPassword]=useState<string>("");
-  const [isAuth, setIsAuth] = useState<any>(null);
   const dispatch=useDispatch();
   const history=useHistory();
   const {session} = useSelector((state: RootState) => state.sessionid);
@@ -78,13 +77,12 @@ const LoginForm: React.FC<any> = () => {
 
   useEffect(() => {
     getImages();
-    if(session){
-      history.push("/home");
-    }
 
-  },[pics]);
+
+  });
 
   return (
+
 <div>
       <div className="container"  style={{
         position: "absolute",
@@ -181,7 +179,7 @@ const LoginForm: React.FC<any> = () => {
 
                   <div className="text-center">
                     <a className="small">
-                      Créer un compte!
+                      {session}
                     </a>
                   </div>
                 </div>

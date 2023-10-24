@@ -7,6 +7,7 @@ import HomePage from "../HomePage/HomePage";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import SessionID from "../../components/SessionID/SessionID";
+import LoginRoute from "../../components/LoginRoute/LoginRoute";
 
 
 
@@ -20,7 +21,7 @@ const LoginPage: React.FC<any> = () => {
 
                 <Switch>
 
-                    <Route exact path='/' component={LoginForm}/>
+                    <LoginRoute exact path='/' component={LoginForm}/>
                     <PrivateRoute
                         path="/home"
                         component={HomePage}
