@@ -30,7 +30,7 @@ const LoginForm: React.FC<any> = () => {
 
 
   const getImages = async () => {
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`)
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`,{withCredentials:true})
         .then((response) => {
           setPics(response.data);
 
