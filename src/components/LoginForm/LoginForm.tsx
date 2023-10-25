@@ -1,12 +1,17 @@
 import * as React from "react";
 import login from "./login.png"
-import login_toast from "./login-toast.png";
-import {Carousel, Toast, ToastContainer} from "react-bootstrap";
-import {useEffect, useState} from "react";
+
+import {Carousel} from "react-bootstrap";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {openMessageToast} from "../Redux-Toolkit/Slices/MessageToastSlice";
 import MessageToast from "../MessageToast/MessageToast";
+import {useNavigate} from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
+
+import Cookies from "js-cookie";
+
 
 
 
@@ -19,7 +24,10 @@ const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
   const [username,setUsername]=useState<string>("");
   const[password,setPassword]=useState<string>("");
+  const {authenticated, setAuthenticated} = useContext(AuthContext);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
+
 
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`)
@@ -41,11 +49,13 @@ const LoginForm: React.FC<any> = () => {
     formData.append('password', password);
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{withCredentials:true})
         .then((response:any) => {
-          window.location.href="/home";
+            setAuthenticated(Cookies.get("isAuth"));
+          navigate('/');
         })
         .catch((error:any) => {
           dispatch(openMessageToast({ titre: "Authentification",color:"rgb(223,22,44)","message":error.response.data.message,"icon":"far fa-times-circle" }))
         });
+
 
 
   }
