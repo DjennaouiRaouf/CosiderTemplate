@@ -59,6 +59,31 @@ const AddClientForm: React.FC<any> = () => {
   };
 
 
+  const[RS,setRS]=useState <string>("");
+  const [errorRS, setErrorRS] = useState('');
+  const handleChangeRS = (e:any) => {
+    const value = e.target.value;
+    setRS(value);
+    if (!value.trim()) {
+      setErrorRS('Ce champ est obligatoire.');
+    } else {
+      setErrorRS('');
+    }
+  };
+
+
+  const[NRC,setNRC]=useState <string>("");
+  const [errorNRC, setErrorNRC] = useState('');
+  const handleChangeNRC = (e:any) => {
+    const value = e.target.value;
+    setNRC(value);
+    if (!value.trim()) {
+      setErrorNRC('Ce champ est obligatoire.');
+    } else {
+      setErrorNRC('');
+    }
+  };
+
 
 
 
@@ -129,13 +154,23 @@ const AddClientForm: React.FC<any> = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <TextField id="standard-basic" label="Raison Social " variant="standard" fullWidth/>
+                    <TextField id="standard-basic" label="Raison Social " variant="standard"
+                               value={RS}
+                               onChange={handleChangeRS}
+                               error={Boolean(errorRS)}
+                               helperText={errorRS}
+                               fullWidth/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
                     <TextField id="standard-basic" label="Numero Registre Commerce"
-                               variant="standard" fullWidth />
+                               variant="standard"
+                               value={NRC}
+                               onChange={handleChangeNRC}
+                               error={Boolean(errorNRC)}
+                               helperText={errorNRC}
+                               fullWidth />
 
                   </div>
                 </div>
