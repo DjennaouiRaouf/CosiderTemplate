@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
-import {Routes as Router, Route, Navigate, Outlet} from 'react-router-dom'
+import {Routes as Router, Route, Navigate} from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext';
 import LoginForm from "../LoginForm/LoginForm";
 import HomePage from "../../Pages/HomePage/HomePage";
-type RoutesProps = {
-  //
-};
+
 
 
 const Routes: React.FC<any> = () => {

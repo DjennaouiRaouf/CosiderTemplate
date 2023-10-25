@@ -7,18 +7,19 @@ import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
 import {useEffect, useState} from "react";
-import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
+
 
 
 
 
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
-
+  const navigate=useNavigate();
   const logout = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`, {withCredentials: true})
         .then((response: any) => {
-          window.location.href="/"
+          navigate("/");
         })
         .catch((error: any) => {
         });
