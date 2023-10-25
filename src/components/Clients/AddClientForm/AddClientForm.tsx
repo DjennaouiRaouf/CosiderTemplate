@@ -85,7 +85,22 @@ const AddClientForm: React.FC<any> = () => {
   };
 
 
+  const ajouterClient = () => {
 
+    if (!libelleClient.trim()) {
+      setErrorLC('Ce champ est obligatoire.');
+    }
+    if (!NIFC.trim()) {
+      setErrorNIFC('Ce champ est obligatoire.');
+    }
+    if (!RS.trim()) {
+      setErrorRS('Ce champ est obligatoire.');
+    }
+    if (!NRC.trim()) {
+      setErrorNRC('Ce champ est obligatoire.');
+    }
+
+  }
 
 
 
@@ -190,7 +205,7 @@ const AddClientForm: React.FC<any> = () => {
                     className="col-md-12"
                     style={{ textAlign: "right", marginTop: 5 }}
                 >
-                  <MUIButton variant="contained" style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-user-plus" />}>
+                  <MUIButton variant="contained" onClick={ajouterClient} style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-user-plus" />}>
                     &nbsp;Ajouter
                   </MUIButton>
 
