@@ -38,7 +38,7 @@ const NavigationBar: React.FC<any> = () => {
 
   useEffect(() => {
     getUsername();
-  });
+  },[username]);
 
 
 

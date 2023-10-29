@@ -7,7 +7,7 @@ import AddClientForm from "./components/Clients/AddClientForm/AddClientForm";
 function App() {
     return (
     <div className="App">
-        <AddClientForm/>
+        <MainPage/>
 
     </div>
   );
