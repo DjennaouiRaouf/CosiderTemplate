@@ -17,7 +17,11 @@ const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
   const navigate=useNavigate();
   const logout = async () => {
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`, {withCredentials: true})
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
+      headers:{
+        'Authorization': `Token ${sessionStorage.getItem('token')}}`
+      }
+    })
         .then((response: any) => {
           navigate("/");
         })
@@ -25,19 +29,11 @@ const NavigationBar: React.FC<any> = () => {
         });
 
   };
-  const getUsername = async () => {
 
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`, {withCredentials: true})
-        .then((response: any) => {
-          setUsername(response.data.username);
-        })
-        .catch((error: any) => {
-
-        });
-  }
 
   useEffect(() => {
-    getUsername();
+    const usr:any=sessionStorage.getItem("username")
+    setUsername(usr);
   },[username]);
 
 

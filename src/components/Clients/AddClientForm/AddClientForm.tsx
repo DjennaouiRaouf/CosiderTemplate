@@ -1,114 +1,127 @@
 import * as React from "react";
 import  usr from "./user.png"
 import TextField from "@mui/material/TextField";
-import {Button as MUIButton}  from "@mui/material";
+import {Button as MUIButton, MenuItem} from "@mui/material";
 import {useState} from "react";
-type AddClientFormProps = {
-  //
-};
+import axios from "axios";
+import Cookies from "js-cookie";
+
+
+
+interface FormState {
+  Code_Client  : string,
+  Libelle_Client: string,
+  NIF:string,
+  Raison_Social:string,
+  Numero_Registre_Commerce:string,
+  Type_Client:string,
+  Cosider_Client:boolean,
+}
+
+interface FormErrorState {
+  Code_Client  : string,
+  Libelle_Client: string,
+  NIF:string,
+  Raison_Social:string,
+  Numero_Registre_Commerce:string,
+  Type_Client:string,
+}
 
 const AddClientForm: React.FC<any> = () => {
+  const options:any[] = [
+    {
+      value: true,
+      label: 'Oui',
+    },
+    {
+      value: false,
+      label: 'Non',
+    },
+  ];
 
-  const[codeClient,setCodeClient]=useState <string>("");
-  const [errorCC, setErrorCC] = useState('');
-  const handleChangeCC = (e:any) => {
-    const value = e.target.value;
-    setCodeClient(value);
-    if (!value.trim()) {
-      setErrorCC('Ce champ est obligatoire.');
-    } else {
-      setErrorCC('');
+
+  const [formData, setFormData] = useState<FormState>({
+    Code_Client  : '',
+    Libelle_Client: '',
+    NIF:'',
+    Raison_Social:'',
+    Numero_Registre_Commerce:'',
+    Type_Client:'',
+    Cosider_Client:false,
+
+  });
+  const [errors, setErrors] = useState<FormErrorState>({
+    Code_Client  : '',
+    Libelle_Client: '',
+    NIF:'',
+    Raison_Social:'',
+    Numero_Registre_Commerce:'',
+    Type_Client:'',
+
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const validateForm = (data: any) => {
+    // Add your validation rules here
+    const newErrors = {
+      Code_Client: data.Code_Client ? '' : 'Code Client est obligatoire',
+      Libelle_Client: data.Libelle_Client ?'':'Libelle Client est obligatoire',
+      NIF: data.NIF ?'':'NIF est obligatoire',
+      Raison_Social: data.Raison_Social ?'':'Raison Social est obligatoire',
+      Numero_Registre_Commerce: data.Numero_Registre_Commerce ?'':'Numero Registre Commerce est obligatoire',
+      Type_Client: data.Type_Client ?'':'Type Client est obligatoire',
+    };
+
+    return newErrors;
+  };
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors = validateForm(formData);
+    setErrors(newErrors);
+
+
+
+    if (Object.values(newErrors).every((error) => !error)) {
+      const fd:FormData=new FormData();
+
+      fd.append("code_client",formData.Code_Client );
+          fd.append("type_client",formData.Type_Client );
+          fd.append("est_client_cosider",String(formData.Cosider_Client));
+          fd.append("libelle_client",formData.Libelle_Client );
+          fd.append("nif", formData.NIF);
+          fd.append("raison_social",formData.Raison_Social);
+          fd.append("num_registre_commerce",formData.Numero_Registre_Commerce );
+
+      // Form is valid, submit the data or perform other actions
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addclient/`,fd,{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': sessionStorage.getItem('token'),
+
+        },
+
+      })
+          .then((response:any) => {
+
+          })
+          .catch((error:any) => {
+
+          });
+
     }
   };
-
-  const[nomClient,setNomClient]=useState <string>("");
-  const [errorNC, setErrorNC] = useState('');
-  const handleChangeNC = (e:any) => {
-    const value = e.target.value;
-    setNomClient(value);
-    if (!value.trim()) {
-      setErrorNC('Ce champ est obligatoire.');
-    } else {
-      setErrorNC('');
-    }
-  };
-
-
-  const[libelleClient,setLibelleClient]=useState <string>("");
-  const [errorLC, setErrorLC] = useState('');
-  const handleChangeLC = (e:any) => {
-    const value = e.target.value;
-    setLibelleClient(value);
-    if (!value.trim()) {
-      setErrorLC('Ce champ est obligatoire.');
-    } else {
-      setErrorLC('');
-    }
-  };
-
-  const[NIFC,setNIFC]=useState <string>("");
-  const [errorNIFC, setErrorNIFC] = useState('');
-  const handleChangeNIFC = (e:any) => {
-    const value = e.target.value;
-    setNIFC(value);
-    if (!value.trim()) {
-      setErrorNIFC('Ce champ est obligatoire.');
-    } else {
-      setErrorNIFC('');
-    }
-  };
-
-
-  const[RS,setRS]=useState <string>("");
-  const [errorRS, setErrorRS] = useState('');
-  const handleChangeRS = (e:any) => {
-    const value = e.target.value;
-    setRS(value);
-    if (!value.trim()) {
-      setErrorRS('Ce champ est obligatoire.');
-    } else {
-      setErrorRS('');
-    }
-  };
-
-
-  const[NRC,setNRC]=useState <string>("");
-  const [errorNRC, setErrorNRC] = useState('');
-  const handleChangeNRC = (e:any) => {
-    const value = e.target.value;
-    setNRC(value);
-    if (!value.trim()) {
-      setErrorNRC('Ce champ est obligatoire.');
-    } else {
-      setErrorNRC('');
-    }
-  };
-
-
-  const ajouterClient = () => {
-
-    if (!libelleClient.trim()) {
-      setErrorLC('Ce champ est obligatoire.');
-    }
-    if (!NIFC.trim()) {
-      setErrorNIFC('Ce champ est obligatoire.');
-    }
-    if (!RS.trim()) {
-      setErrorRS('Ce champ est obligatoire.');
-    }
-    if (!NRC.trim()) {
-      setErrorNRC('Ce champ est obligatoire.');
-    }
-
-  }
-
 
 
   return (
       <div className="container-fluid" style={{marginTop:"20px"}}>
+
         <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
           <div className="card-body">
-            <form>
+            <form onSubmit={handleSubmit} >
               <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
                 <div
                     className="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
@@ -128,63 +141,97 @@ const AddClientForm: React.FC<any> = () => {
                     <div className="col-md-12 text-start">
                       <div className="mb-3">
                         <TextField id="standard-basic" label="Code " variant="standard"
-                                   value={codeClient}
-                                   onChange={handleChangeCC}
-                                   error={Boolean(errorCC)}
-                                   helperText={errorCC}
+                                   name="Code_Client"
+                                   value={formData.Code_Client}
+                                   onChange={handleChange}
+                                   error={!!errors.Code_Client}
+                                   helperText={errors.Code_Client}
                                    fullWidth/>
                       </div>
                     </div>
-                    <div className="col-md-12 text-start">
-                      <div className="mb-3">
-                        <TextField id="standard-basic" label="Nom " variant="standard"
-                                   value={nomClient}
-                                   onChange={handleChangeNC}
-                                   error={Boolean(errorNC)}
-                                   helperText={errorNC}
-                                   fullWidth/>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
                 <div className="col-md-6 text-start">
                   <div className="mb-3">
                     <TextField id="standard-basic" label="libelle " variant="standard"
-                               value={libelleClient}
-                               onChange={handleChangeLC}
-                               error={Boolean(errorLC)}
-                               helperText={errorLC}
+                               name="Libelle_Client"
+                               value={formData.Libelle_Client}
+                               onChange={handleChange}
+                               error={!!errors.Libelle_Client}
+                               helperText={errors.Libelle_Client}
                                fullWidth/>
                   </div>
                 </div>
                 <div className="col-md-6 text-start">
                   <div className="mb-3">
                     <TextField id="standard-basic" label="NIF " variant="standard"
-                               value={NIFC}
-                               onChange={handleChangeNIFC}
-                               error={Boolean(errorNIFC)}
-                               helperText={errorNIFC}
+                               name="NIF"
+                               value={formData.NIF}
+                               onChange={handleChange}
+                               error={!!errors.NIF}
+                               helperText={errors.NIF}
+                               fullWidth/>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <TextField
+                        id="standard-basic"
+                        select
+                        label="Cosider_Client"
+                        name="Cosider_Client"
+                        defaultValue={formData.Cosider_Client}
+                        onChange={handleChange}
+                        SelectProps={{
+                          native: true,
+                        }}
+                        fullWidth
+
+                        variant="standard"
+                    >
+                      {options.map((option,key) => (
+                          <option key={key} value={option.value}>
+                            {option.label}
+                          </option>
+                      ))}
+                    </TextField>
+
+
+
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <TextField id="standard-basic" label="Type" variant="standard"
+                               name="Type_Client"
+                               value={formData.Type_Client}
+                               onChange={handleChange}
+                               error={!!errors.Type_Client}
+                               helperText={errors.Type_Client}
                                fullWidth/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
                     <TextField id="standard-basic" label="Raison Social " variant="standard"
-                               value={RS}
-                               onChange={handleChangeRS}
-                               error={Boolean(errorRS)}
-                               helperText={errorRS}
+                               name="Raison_Social"
+                               value={formData.Raison_Social}
+                               onChange={handleChange}
+                               error={!!errors.Raison_Social}
+                               helperText={errors.Raison_Social}
                                fullWidth/>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
                     <TextField id="standard-basic" label="Numero Registre Commerce"
+                               name="Numero_Registre_Commerce"
                                variant="standard"
-                               value={NRC}
-                               onChange={handleChangeNRC}
-                               error={Boolean(errorNRC)}
-                               helperText={errorNRC}
+                               value={formData.Numero_Registre_Commerce}
+                               onChange={handleChange}
+                               error={!!errors.Numero_Registre_Commerce}
+                               helperText={errors.Numero_Registre_Commerce}
                                fullWidth />
 
                   </div>
@@ -205,7 +252,7 @@ const AddClientForm: React.FC<any> = () => {
                     className="col-md-12"
                     style={{ textAlign: "right", marginTop: 5 }}
                 >
-                  <MUIButton variant="contained" onClick={ajouterClient} style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-user-plus" />}>
+                  <MUIButton variant="contained" type="submit" style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-user-plus" />}>
                     &nbsp;Ajouter
                   </MUIButton>
 

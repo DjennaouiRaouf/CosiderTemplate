@@ -30,7 +30,11 @@ const LoginForm: React.FC<any> = () => {
 
 
   const getImages = async () => {
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`,{withCredentials:true})
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`,{
+      headers:{
+        "Content-Type":"application/json",
+      }
+    })
         .then((response) => {
           setPics(response.data);
 
@@ -47,9 +51,16 @@ const LoginForm: React.FC<any> = () => {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{withCredentials:true})
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{
+      headers:{
+        "Content-Type":"application/json",
+      }
+    })
         .then((response:any) => {
-            setAuthenticated(Cookies.get("isAuth"));
+            sessionStorage.setItem('token',response.data.token);
+            sessionStorage.setItem('username',response.data.username);
+            sessionStorage.setItem('id',response.data.id);
+
           navigate('/');
         })
         .catch((error:any) => {
