@@ -9,8 +9,9 @@ import {openMessageToast} from "../Redux-Toolkit/Slices/MessageToastSlice";
 import MessageToast from "../MessageToast/MessageToast";
 import {useNavigate} from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
-
 import Cookies from "js-cookie";
+import TextField from "@mui/material/TextField";
+import {Button as MUIButton} from "@mui/material";
 
 
 
@@ -145,35 +146,33 @@ const LoginForm: React.FC<any> = () => {
                       </div>
                       <div className="user">
                         <div className="mb-3">
-                          <input
-                              id="exampleInputEmail"
-                              className="form-control form-control-user"
-                              type="text"
-                              aria-describedby="emailHelp"
-                              placeholder="Nom d'utilisateur"
-                              name="username"
-                              value={username}
-                              onChange={onUsernameChange}
-                          />
+
+                          <TextField id="standard-basic" label="Nom d'utilisateur"
+
+                                     variant="standard"
+                                     value={username}
+                                     onChange={onUsernameChange}
+                                     fullWidth />
+
                         </div>
                         <div className="mb-3">
-                          <input
-                              id="exampleInputPassword"
-                              className="form-control form-control-user"
-                              type="password"
-                              placeholder="Mot de passe"
-                              name="password"
-                              value={password}
-                              onChange={onPasswordChange}
-                          />
+
+                          <TextField id="standard-basic" label="Mot de passe"
+                                     type="password"
+                                     variant="standard"
+                                     value={password}
+                                     onChange={onPasswordChange}
+                                     fullWidth />
+
                         </div>
                         <div className="mb-3">
                           <div className="custom-control custom-checkbox small" />
                         </div>
-                        <button className="btn btn-primary btn-sm d-block btn-user w-100"
-                                type="submit"
-                                style={{ background: "#df162c", borderWidth: 0 }}
-                                onClick={authentification}>Login</button>
+
+                        <MUIButton className="d-block btn-user w-100" variant="contained" type="submit"  style={{ background: "#df162c", borderWidth: 0 }}onClick={authentification} >
+                          Connexion
+                        </MUIButton>
+
                         <hr />
                       </div>
 

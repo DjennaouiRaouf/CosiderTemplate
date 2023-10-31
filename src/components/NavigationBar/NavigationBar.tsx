@@ -43,10 +43,11 @@ const NavigationBar: React.FC<any> = () => {
 
     })
         .then((response: any) => {
-          console.log(response.data.whoami)
           setUsername(response.data.whoami);
         })
         .catch((error: any) => {
+          Cookies.remove('token');
+          navigate('/');
         });
 
   };
@@ -118,9 +119,7 @@ const NavigationBar: React.FC<any> = () => {
                   </div>
                 </div>
               </li>
-
             </Nav>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import  usr from "./user.png"
+import  mkr from "./marker.png"
 import TextField from "@mui/material/TextField";
 import {Button as MUIButton, MenuItem} from "@mui/material";
 import {useState} from "react";
@@ -154,14 +154,22 @@ const AddSiteForm: React.FC<any> = () => {
                 >
                   <img
                       className="rounded-circle mb-3 mt-4 img-fluid"
-                      src={usr}
-                      style={{ display: "inline", maxHeight: 110 }}
-                      width={112}
-                      height={110}
+                      src={mkr}
+                      style={{ display: "inline", maxHeight: 100 }}
+                      width={100}
+                      height={100}
                   />
                   <br />
                 </div>
                 <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
+                  <div className="row">
+                    <div className="col-md-12 text-start">
+                      <div className="mb-3">
+                        <h1 className="text-center">Ajouter un Site</h1>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="row">
                     <div className="col-md-12 text-start">
                       <div className="mb-3">
@@ -277,7 +285,7 @@ const AddSiteForm: React.FC<any> = () => {
                     className="col-md-12"
                     style={{ textAlign: "right", marginTop: 5 }}
                 >
-                  <MUIButton variant="contained" type="submit" style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-user-plus" />}>
+                  <MUIButton variant="contained" type="submit" style={{ borderWidth: 0, background: "#d7142a" }} endIcon={ <i className="fas fa-map-marker-alt" />}>
                     &nbsp;Ajouter
                   </MUIButton>
 

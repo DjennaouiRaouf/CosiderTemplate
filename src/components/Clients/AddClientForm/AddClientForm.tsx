@@ -163,6 +163,14 @@ const AddClientForm: React.FC<any> = () => {
                 </div>
                 <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
                   <div className="row">
+                    <div className="row">
+                      <div className="col-md-12 text-start">
+                        <div className="mb-3">
+                          <h1 className="text-center">Ajouter un Client</h1>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="col-md-12 text-start">
                       <div className="mb-3">
                         <TextField id="standard-basic" label="Code " variant="standard"
