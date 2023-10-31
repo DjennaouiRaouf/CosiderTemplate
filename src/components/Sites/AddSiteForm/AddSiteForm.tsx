@@ -30,7 +30,7 @@ interface FormErrorState {
   Type_Client:string,
 }
 
-const AddClientForm: React.FC<any> = () => {
+const AddSiteForm: React.FC<any> = () => {
   const options:any[] = [
     {
       value: "0",
@@ -92,12 +92,12 @@ const AddClientForm: React.FC<any> = () => {
       const fd:FormData=new FormData();
 
       fd.append("code_client",formData.Code_Client );
-          fd.append("type_client",formData.Type_Client );
-          fd.append("est_client_cosider",formData.Cosider_Client);
-          fd.append("libelle_client",formData.Libelle_Client );
-          fd.append("nif", formData.NIF);
-          fd.append("raison_social",formData.Raison_Social);
-          fd.append("num_registre_commerce",formData.Numero_Registre_Commerce );
+      fd.append("type_client",formData.Type_Client );
+      fd.append("est_client_cosider",formData.Cosider_Client);
+      fd.append("libelle_client",formData.Libelle_Client );
+      fd.append("nif", formData.NIF);
+      fd.append("raison_social",formData.Raison_Social);
+      fd.append("num_registre_commerce",formData.Numero_Registre_Commerce );
 
       // Form is valid, submit the data or perform other actions
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addclient/`,fd,{
@@ -294,4 +294,4 @@ const AddClientForm: React.FC<any> = () => {
   );
 };
 
-export default AddClientForm;
+export default AddSiteForm;

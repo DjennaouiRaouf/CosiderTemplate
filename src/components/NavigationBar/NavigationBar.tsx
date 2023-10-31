@@ -6,9 +6,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import {AuthContext} from "../Context/AuthContext";
 
 
 
@@ -17,14 +18,17 @@ import Cookies from "js-cookie";
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
   const navigate=useNavigate();
+  const {authenticated, setAuthenticated} = useContext(AuthContext);
   const logout = async () => {
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
+      withCredentials:true,
       headers:{
-        'Authorization': `Token ${sessionStorage.get('token')}}`
+        Authorization: `Token ${Cookies.get("token")}`,
       }
     })
         .then((response: any) => {
-          navigate("/");
+          setAuthenticated(null)
+          console.log(response.data)
         })
         .catch((error: any) => {
         });
@@ -32,7 +36,6 @@ const NavigationBar: React.FC<any> = () => {
   };
 
   const whoami= async () => {
-    console.log(Cookies.get("token"))
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`,{
       headers:{
         Authorization: `Token ${Cookies.get("token")}`
