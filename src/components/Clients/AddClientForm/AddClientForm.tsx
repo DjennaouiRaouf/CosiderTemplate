@@ -15,7 +15,7 @@ interface FormState {
   Raison_Social:string,
   Numero_Registre_Commerce:string,
   Type_Client:string,
-  Cosider_Client:boolean,
+  Cosider_Client:string,
 }
 
 interface FormErrorState {
@@ -30,11 +30,11 @@ interface FormErrorState {
 const AddClientForm: React.FC<any> = () => {
   const options:any[] = [
     {
-      value: true,
+      value: "1",
       label: 'Oui',
     },
     {
-      value: false,
+      value: "0",
       label: 'Non',
     },
   ];
@@ -47,7 +47,7 @@ const AddClientForm: React.FC<any> = () => {
     Raison_Social:'',
     Numero_Registre_Commerce:'',
     Type_Client:'',
-    Cosider_Client:false,
+    Cosider_Client:'0',
 
   });
   const [errors, setErrors] = useState<FormErrorState>({
@@ -89,7 +89,7 @@ const AddClientForm: React.FC<any> = () => {
 
       fd.append("code_client",formData.Code_Client );
           fd.append("type_client",formData.Type_Client );
-          fd.append("est_client_cosider",String(formData.Cosider_Client));
+          fd.append("est_client_cosider",formData.Cosider_Client);
           fd.append("libelle_client",formData.Libelle_Client );
           fd.append("nif", formData.NIF);
           fd.append("raison_social",formData.Raison_Social);
