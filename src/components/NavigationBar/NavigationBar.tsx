@@ -8,6 +8,7 @@ import logo from "./logo.png"
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 
@@ -19,7 +20,7 @@ const NavigationBar: React.FC<any> = () => {
   const logout = async () => {
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
       headers:{
-        'Authorization': `Token ${sessionStorage.getItem('token')}}`
+        'Authorization': `Token ${sessionStorage.get('token')}}`
       }
     })
         .then((response: any) => {
@@ -30,11 +31,27 @@ const NavigationBar: React.FC<any> = () => {
 
   };
 
+  const whoami= async () => {
+    console.log(Cookies.get("token"))
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/whoami/`,{
+      headers:{
+        Authorization: `Token ${Cookies.get("token")}`
+      }
+
+    })
+        .then((response: any) => {
+          console.log(response.data.whoami)
+          setUsername(response.data.whoami);
+        })
+        .catch((error: any) => {
+        });
+
+  };
+
 
   useEffect(() => {
-    const usr:any=sessionStorage.getItem("username")
-    setUsername(usr);
-  },[username]);
+    whoami();
+  });
 
 
 

@@ -97,10 +97,9 @@ const AddClientForm: React.FC<any> = () => {
 
       // Form is valid, submit the data or perform other actions
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addclient/`,fd,{
-        withCredentials: true,
         headers: {
+          Authorization: `Token ${Cookies.get("token")}`,
           'Content-Type': 'application/json',
-          'Authorization': sessionStorage.getItem('token'),
 
         },
 

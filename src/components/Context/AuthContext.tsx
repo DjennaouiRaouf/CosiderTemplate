@@ -24,8 +24,13 @@ const AuthProvider = ({children}: Props) => {
 
   const navigate = useNavigate()
   useEffect(() => {
-    const session:any=sessionStorage.getItem('token') && sessionStorage.getItem("username")&&sessionStorage.getItem("id");
-    setAuthenticated(session);
+    const session:any=Cookies.get('token');
+    if(session){
+      setAuthenticated(session);
+    }else{
+      setAuthenticated(null);
+    }
+
 
   });
 

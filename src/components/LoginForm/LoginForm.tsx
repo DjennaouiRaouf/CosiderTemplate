@@ -52,16 +52,11 @@ const LoginForm: React.FC<any> = () => {
     formData.append('username', username);
     formData.append('password', password);
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{
-      headers:{
-        "Content-Type":"application/json",
-      }
+      withCredentials:true,
     })
         .then((response:any) => {
-            sessionStorage.setItem('token',response.data.token);
-            sessionStorage.setItem('username',response.data.username);
-            sessionStorage.setItem('id',response.data.id);
+          setAuthenticated(String(Cookies.get("token")))
 
-          navigate('/');
         })
         .catch((error:any) => {
           dispatch(openMessageToast({ titre: "Authentification",color:"rgb(223,22,44)","message":error.response.data.message,"icon":"far fa-times-circle" }))
