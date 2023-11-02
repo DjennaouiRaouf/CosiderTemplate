@@ -22,8 +22,10 @@ const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
   const [msg,setMsg]=useState<string>("");
 
-  const [username,setUsername]=useState<string>("");
-  const[password,setPassword]=useState<string>("");
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
   const {authenticated, setAuthenticated} = useContext(AuthContext);
 
@@ -50,10 +52,10 @@ const LoginForm: React.FC<any> = () => {
 
 
   const authentification = async() => {
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,formData,{
+    const fd = new FormData();
+    fd.append('username', formData.username);
+    fd.append('password', formData.password);
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/login/`,fd,{
       withCredentials:true,
     })
         .then((response:any) => {
@@ -69,13 +71,13 @@ const LoginForm: React.FC<any> = () => {
   }
 
 
-  const onUsernameChange = (e:any) => {
-    setUsername(e.target.value);
-  }
-
-  const onPasswordChange = (e:any) => {
-    setPassword(e.target.value);
-  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     getImages();
@@ -148,11 +150,15 @@ const LoginForm: React.FC<any> = () => {
                       </div>
                       <div className="user">
                         <div className="mb-3">
-                          <InputText className="w-100" placeholder="Nom d'utilisateur" value={username} onChange={onUsernameChange} />
+                          <InputText className="w-100"  id="username"
+                                     name="username" placeholder="Nom d'utilisateur" value={formData.username}
+                                     onChange={handleInputChange} />
 
                         </div>
                         <div className="mb-3">
-                             <InputText className="w-100" placeholder="password" onChange={onPasswordChange} value={password} type="password" />
+                             <InputText className="w-100"  id="password"
+                                        onChange={handleInputChange}
+                                        name="password" placeholder="Mot de passe"  value={formData.password} type="password" />
                         </div>
                         <div className="mb-3">
                           <div className="custom-control custom-checkbox small" />
