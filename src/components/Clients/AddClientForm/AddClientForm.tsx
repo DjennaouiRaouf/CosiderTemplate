@@ -1,11 +1,12 @@
 import * as React from "react";
 import  usr from "./user.png"
-import {useState} from "react";
+import {useRef, useState} from "react";
 import axios  from "axios";
 import Cookies from "js-cookie";
 import {InputText} from "primereact/inputtext";
 import { Dropdown as PRDropdown } from 'primereact/dropdown';
 import { Button as PRButton } from 'primereact/button';
+import {Toast as PRToast} from "primereact/toast";
 
 interface FormState {
   Code_Client  : string,
@@ -22,6 +23,7 @@ interface Opt {
 }
 const AddClientForm: React.FC<any> = () => {
 
+  const toast = useRef<PRToast>(null);
   const [formData, setFormData] = useState<FormState>({
     Code_Client  : '',
     Libelle_Client: '',
@@ -32,8 +34,12 @@ const AddClientForm: React.FC<any> = () => {
     Cosider_Client:'0',
   });
 
+  const handleDropdownChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: e.value });
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e:any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -71,6 +77,8 @@ const AddClientForm: React.FC<any> = () => {
             Cosider_Client:'0',
 
           })
+          toast.current?.show({ severity: 'success', summary: 'Client', detail: String(response.data.message), life: 3000 });
+
 
 
         })
@@ -93,7 +101,10 @@ const opt:Opt[] = [
 
 ];
 return (
-    <div className="container-fluid" style={{marginTop:"20px"}}>
+    <div>
+      <PRToast ref={toast} position="top-right" />
+
+      <div className="container-fluid" style={{marginTop:"20px"}}>
 
       <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
         <div className="card-body">
@@ -125,7 +136,7 @@ return (
                   <div className="col-md-12 text-start">
                     <div className="mb-3">
                              <InputText className="w-100" placeholder="Code" name="Code_Client"  value={formData.Code_Client}
-                                        onChange={handleChange} />
+                                        onChange={handleInputChange} />
 
                     </div>
                   </div>
@@ -136,7 +147,7 @@ return (
                 <div className="mb-3">
                              <InputText  className="w-100" placeholder="Libelle" name="Libelle_Client"
                                          value={formData.Libelle_Client}
-                                         onChange={handleChange} />
+                                         onChange={handleInputChange} />
 
                 </div>
               </div>
@@ -145,17 +156,22 @@ return (
 
                              <InputText  className="w-100" placeholder="NIF" name="NIF"
                                          value={formData.NIF}
-                                         onChange={handleChange} />
+                                         onChange={handleInputChange} />
 
 
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                  <PRDropdown name="Cosider_Client" value={formData.Cosider_Client} onChange={() =>handleChange} options={opt} optionLabel="name"
-                              placeholder="Cosider_Client" className="w-full md:w-14rem" />
-
-
+                  <PRDropdown
+                      className="w-100"
+                      id="dropdown"
+                      name="Cosider_Client"
+                      value={formData.Cosider_Client}
+                      options={opt}
+                      onChange={handleDropdownChange}
+                      placeholder="Select an option"
+                  />
                 </div>
               </div>
               <div className="col-md-6">
@@ -163,7 +179,7 @@ return (
 
                              <InputText className="w-100" placeholder="Type"  name="Type_Client"
                                          value={formData.Type_Client}
-                                         onChange={handleChange} />
+                                         onChange={handleInputChange} />
 
 
                 </div>
@@ -172,7 +188,7 @@ return (
                 <div className="mb-3">
                            <InputText className="w-100" placeholder="Raison Social"  name="Raison_Social"
                                           value={formData.Raison_Social}
-                                          onChange={handleChange} />
+                                          onChange={handleInputChange} />
 
                 </div>
               </div>
@@ -180,7 +196,7 @@ return (
                 <div className="mb-3">
                              <InputText className="w-100" placeholder="Numero Registre Commerce"   name="Numero_Registre_Commerce"
                                           value={formData.Numero_Registre_Commerce}
-                                          onChange={handleChange} />
+                                          onChange={handleInputChange} />
 
                 </div>
               </div>
@@ -196,7 +212,7 @@ return (
           </form>
         </div>
       </div>
-
+      </div>
     </div>
 
 

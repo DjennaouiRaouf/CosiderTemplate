@@ -20,7 +20,6 @@ import {Toast as PRToast} from "primereact/toast";
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
-  const [msg,setMsg]=useState<string>("");
 
   const [formData, setFormData] = useState({
     username: '',
@@ -179,7 +178,6 @@ const LoginForm: React.FC<any> = () => {
                 </div>
               </div>
             </div>
-
           </div>
     </div>
 
