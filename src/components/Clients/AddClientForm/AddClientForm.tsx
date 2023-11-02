@@ -80,7 +80,6 @@ const AddClientForm: React.FC<any> = () => {
           toast.current?.show({ severity: 'success', summary: 'Client', detail: String(response.data.message), life: 3000 });
 
 
-
         })
         .catch((error:any) => {
 
