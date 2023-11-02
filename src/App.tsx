@@ -1,15 +1,18 @@
 import React from 'react';
-import './App.css';
+import './theme.css';
+import "primeicons/primeicons.css";
+import { PrimeReactProvider } from 'primereact/api';
 import MainPage from "./Pages/MainPage/MainPage";
-import AddClientForm from "./components/Clients/AddClientForm/AddClientForm";
+
 
 
 function App() {
     return (
-    <div className="App">
-        <MainPage/>
-
-    </div>
+        <PrimeReactProvider>
+            <div className="App">
+                <MainPage/>
+            </div>
+        </PrimeReactProvider>
   );
 }
 

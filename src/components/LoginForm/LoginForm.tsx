@@ -2,16 +2,13 @@ import * as React from "react";
 import login from "./login.png"
 
 import {Carousel} from "react-bootstrap";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import {useDispatch} from "react-redux";
-import {openMessageToast} from "../Redux-Toolkit/Slices/MessageToastSlice";
-import MessageToast from "../MessageToast/MessageToast";
-import {useNavigate} from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import Cookies from "js-cookie";
-import TextField from "@mui/material/TextField";
-import {Button as MUIButton} from "@mui/material";
+import { InputText } from "primereact/inputtext";
+import { Button as PRButton } from 'primereact/button';
+import {Toast as PRToast} from "primereact/toast";
 
 
 
@@ -23,11 +20,15 @@ import {Button as MUIButton} from "@mui/material";
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
+  const [msg,setMsg]=useState<string>("");
+
   const [username,setUsername]=useState<string>("");
   const[password,setPassword]=useState<string>("");
+
   const {authenticated, setAuthenticated} = useContext(AuthContext);
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+
+
+  const toast = useRef<PRToast>(null);
 
 
   const getImages = async () => {
@@ -58,12 +59,12 @@ const LoginForm: React.FC<any> = () => {
         .then((response:any) => {
           setAuthenticated(String(Cookies.get("token")))
 
+
         })
         .catch((error:any) => {
-          dispatch(openMessageToast({ titre: "Authentification",color:"rgb(223,22,44)","message":error.response.data.message,"icon":"far fa-times-circle" }))
+          toast.current?.show({ severity: 'error', summary: 'Connexion', detail: String(error.response.data.message), life: 3000 });
+
         });
-
-
 
   }
 
@@ -85,6 +86,7 @@ const LoginForm: React.FC<any> = () => {
   return (
 
     <div>
+      <PRToast ref={toast} position="top-right" />
           <div className="container"  style={{
             position: "absolute",
             left: 0,
@@ -146,32 +148,17 @@ const LoginForm: React.FC<any> = () => {
                       </div>
                       <div className="user">
                         <div className="mb-3">
-
-                          <TextField id="standard-basic" label="Nom d'utilisateur"
-
-                                     variant="standard"
-                                     value={username}
-                                     onChange={onUsernameChange}
-                                     fullWidth />
+                          <InputText className="w-100" placeholder="Nom d'utilisateur" value={username} onChange={onUsernameChange} />
 
                         </div>
                         <div className="mb-3">
-
-                          <TextField id="standard-basic" label="Mot de passe"
-                                     type="password"
-                                     variant="standard"
-                                     value={password}
-                                     onChange={onPasswordChange}
-                                     fullWidth />
-
+                             <InputText className="w-100" placeholder="password" onChange={onPasswordChange} value={password} type="password" />
                         </div>
                         <div className="mb-3">
                           <div className="custom-control custom-checkbox small" />
                         </div>
+                        <PRButton  className="w-100" style={{ background: "#df162c", borderWidth: 0 }} onClick={authentification} label="Connexion"  />
 
-                        <MUIButton className="d-block btn-user w-100" variant="contained" type="submit"  style={{ background: "#df162c", borderWidth: 0 }}onClick={authentification} >
-                          Connexion
-                        </MUIButton>
 
                         <hr />
                       </div>
@@ -188,7 +175,6 @@ const LoginForm: React.FC<any> = () => {
             </div>
 
           </div>
-      <MessageToast/>
     </div>
 
   );
