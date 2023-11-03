@@ -3,6 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from "axios";
 import Cookies from "js-cookie";
+import {classNames} from "primereact/utils";
 
 interface Client {
   Code_Client  : string,
@@ -39,15 +40,7 @@ const ClientList: React.FC<any> = () => {
   }, [clients]);
 
   const isCosiderBodyTemplate = (rowData:Client) => {
-    return(
-    <div>
-      {rowData.Cosider_Client === 'true' ? (
-          <i className='far fa-check-circle'/>
-      ) : ( rowData.Cosider_Client === 'false' &&
-          <i className='far fa-times-circle'/>
-      )}
-    </div>
-    );
+    return <i className={classNames('pi', { 'true-icon pi-check-circle': !Boolean(rowData.Cosider_Client), 'false-icon pi-times-circle': Boolean(rowData.Cosider_Client) })}></i>;
 
   }
 
