@@ -43,7 +43,7 @@ const ClientList: React.FC<any> = () => {
     <div>
       {rowData.Cosider_Client === 'true' ? (
           <i className='far fa-check-circle'/>
-      ) : (
+      ) : ( rowData.Cosider_Client === 'false' &&
           <i className='far fa-times-circle'/>
       )}
     </div>
