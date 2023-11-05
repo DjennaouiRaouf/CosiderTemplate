@@ -7,6 +7,7 @@ import {InputText} from "primereact/inputtext";
 import { Dropdown as PRDropdown } from 'primereact/dropdown';
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
+import {InputNumber} from "primereact/inputnumber";
 
 interface FormState {
   Code_Client  : string,
@@ -14,7 +15,7 @@ interface FormState {
   NIF:string,
   Raison_Social:string,
   Numero_Registre_Commerce:string,
-  Type_Client:string,
+  Type_Client:number,
   Cosider_Client:boolean,
 }
 interface Opt {
@@ -30,7 +31,7 @@ const AddClientForm: React.FC<any> = () => {
     NIF:'',
     Raison_Social:'',
     Numero_Registre_Commerce:'',
-    Type_Client:'',
+    Type_Client:0,
     Cosider_Client:false,
   });
 
@@ -49,7 +50,7 @@ const AddClientForm: React.FC<any> = () => {
     const fd:FormData=new FormData();
 
     fd.append("code_client",formData.Code_Client );
-    fd.append("type_client",formData.Type_Client );
+    fd.append("type_client",formData.Type_Client.toString() );
     fd.append("est_client_cosider",formData.Cosider_Client.toString());
     fd.append("libelle_client",formData.Libelle_Client );
     fd.append("nif", formData.NIF);
@@ -73,7 +74,7 @@ const AddClientForm: React.FC<any> = () => {
             NIF:'',
             Raison_Social:'',
             Numero_Registre_Commerce:'',
-            Type_Client:'',
+            Type_Client:0,
             Cosider_Client:false,
 
           })
@@ -176,7 +177,7 @@ return (
               <div className="col-md-6">
                 <div className="mb-3">
 
-                             <InputText className="w-100" placeholder="Type"  name="Type_Client"
+                             <InputNumber className="w-100" placeholder="Type"  name="Type_Client"
                                          value={formData.Type_Client}
                                          onChange={handleInputChange} />
 

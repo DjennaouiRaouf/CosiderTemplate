@@ -28,7 +28,7 @@ const NavigationBar: React.FC<any> = () => {
     })
         .then((response: any) => {
           setAuthenticated(null)
-          console.log(response.data)
+          navigate('/');
         })
         .catch((error: any) => {
         });
@@ -46,8 +46,6 @@ const NavigationBar: React.FC<any> = () => {
           setUsername(response.data.whoami);
         })
         .catch((error: any) => {
-          Cookies.remove('token');
-          navigate('/');
         });
 
   };
@@ -74,13 +72,12 @@ const NavigationBar: React.FC<any> = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="#home">Marché</Nav.Link>
-              <Nav.Link href="#link">Clients</Nav.Link>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown title="Dropdown2" id="basic-nav-dropdown2">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                </NavDropdown>
+              <NavDropdown title="Clients" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/ajout_c">Ajouter un client</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_c">Lister les clients</NavDropdown.Item>
               </NavDropdown>
+
+
             </Nav>
             <Nav className="navbar-nav ms-auto">
               <li className="nav-item dropdown no-arrow">

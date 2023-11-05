@@ -12,7 +12,7 @@ interface Client {
   Raison_Social:string,
   Numero_Registre_Commerce:string,
   Type_Client:string,
-  Cosider_Client:string,
+  Cosider_Client:boolean,
 }
 
 const ClientList: React.FC<any> = () => {
@@ -37,33 +37,23 @@ const ClientList: React.FC<any> = () => {
   }
   useEffect(() => {
     getClients()
-  }, [clients]);
+  });
 
-  const isCosiderBodyTemplate = (rowData:Client) => {
-    return <i className={classNames('pi', { 'true-icon pi-check-circle': !Boolean(rowData.Cosider_Client), 'false-icon pi-times-circle': Boolean(rowData.Cosider_Client) })}></i>;
-
-  }
+  const cosiderClientBodyTemplate= (rowData: any) => {
+    return <i className={classNames('pi', { 'pi-check-circle': rowData.est_client_cosider, 'pi-times-circle': !rowData.est_client_cosider })}></i>;
+  };
 
   return (
-      <div className="container-fluid" style={{marginTop:"20px"}}>
+      <DataTable value={clients}  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+        <Column field="code_client" header="Code" ></Column>
+        <Column field="type_client" header="Type"  ></Column>
+        <Column field="libelle_client" header="Libelle"  ></Column>
+        <Column field="nif" header="NIF" ></Column>
+        <Column field="raison_social" header="Raison social" ></Column>
+        <Column field="num_registre_commerce" header="Registre commerce" ></Column>
+        <Column field="est_client_cosider" header="Cosider Client" dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
+      </DataTable>
 
-        <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
-          <div className="card-body">
-            <DataTable value={clients} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-              <Column field="code_client" header="Code" sortable style={{ width: '25%' }}></Column>
-              <Column field="type_client" header="Type" sortable style={{ width: '25%' }}></Column>
-              <Column field="est_client_cosider" header="Cosider"  body={isCosiderBodyTemplate} sortable style={{ width: '25%' }}></Column>
-              <Column field="libelle_client" header="Libelle" sortable style={{ width: '25%' }}></Column>
-              <Column field="nif" header="NIF" sortable style={{ width: '25%' }}></Column>
-              <Column field="raison_social" header="Raison social" sortable style={{ width: '25%' }}></Column>
-              <Column field="num_registre_commerce" header="Registre commerce" sortable style={{ width: '25%' }}></Column>
-
-
-            </DataTable>
-
-          </div>
-        </div>
-      </div>
   );
 };
 
