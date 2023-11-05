@@ -98,6 +98,7 @@ const AddSiteForm: React.FC<any> = () => {
 
         })
         .catch((error:any) => {
+          console.log(error)
           toast.current?.show({ severity: 'error', summary: 'Site', detail: String(error.response.data.message), life: 3000 });
 
         });
