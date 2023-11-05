@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React  from 'react'
 import {Routes as Router, Route, Navigate} from 'react-router-dom'
 import LoginForm from "../LoginForm/LoginForm";
 import AddClientForm from "../Clients/AddClientForm/AddClientForm";
@@ -28,7 +28,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/home"
               element={
-                  Cookies.get('token')? (
+                  Cookies.get('token') ? (
                       <>
                           <NavigationBar />
                           <Home/>
