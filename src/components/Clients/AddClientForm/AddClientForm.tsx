@@ -15,7 +15,7 @@ interface FormState {
   NIF:string,
   Raison_Social:string,
   Numero_Registre_Commerce:string,
-  Type_Client:number,
+  Type_Client:string,
   Cosider_Client:boolean,
 }
 interface Opt {
@@ -31,7 +31,7 @@ const AddClientForm: React.FC<any> = () => {
     NIF:'',
     Raison_Social:'',
     Numero_Registre_Commerce:'',
-    Type_Client:0,
+    Type_Client:'',
     Cosider_Client:false,
   });
 
@@ -57,7 +57,7 @@ const AddClientForm: React.FC<any> = () => {
     fd.append("raison_social",formData.Raison_Social);
     fd.append("num_registre_commerce",formData.Numero_Registre_Commerce );
 
-    // Form is valid, submit the data or perform other actions
+
     await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addclient/`,fd,{
       headers: {
         Authorization: `Token ${Cookies.get("token")}`,
@@ -74,7 +74,7 @@ const AddClientForm: React.FC<any> = () => {
             NIF:'',
             Raison_Social:'',
             Numero_Registre_Commerce:'',
-            Type_Client:0,
+            Type_Client:'',
             Cosider_Client:false,
 
           })
@@ -135,7 +135,8 @@ return (
 
                   <div className="col-md-12 text-start">
                     <div className="mb-3">
-                             <InputText className="w-100" placeholder="Code" name="Code_Client"  value={formData.Code_Client}
+                      <label className="form-label" htmlFor="name_service">Code Client <strong style={{color:"red"}}>*</strong></label>
+                             <InputText className="w-100"  name="Code_Client"  value={formData.Code_Client}
                                         onChange={handleInputChange} />
 
                     </div>
@@ -145,7 +146,8 @@ return (
               </div>
               <div className="col-md-6 text-start">
                 <div className="mb-3">
-                             <InputText  className="w-100" placeholder="Libelle" name="Libelle_Client"
+                  <label className="form-label" htmlFor="name_service">Libelle <strong style={{color:"red"}}>*</strong></label>
+                             <InputText  className="w-100"  name="Libelle_Client"
                                          value={formData.Libelle_Client}
                                          onChange={handleInputChange} />
 
@@ -153,8 +155,8 @@ return (
               </div>
               <div className="col-md-6 text-start">
                 <div className="mb-3">
-
-                             <InputText  className="w-100" placeholder="NIF" name="NIF"
+                  <label className="form-label" htmlFor="name_service">NIF <strong style={{color:"red"}}>*</strong></label>
+                             <InputText  className="w-100"  name="NIF"
                                          value={formData.NIF}
                                          onChange={handleInputChange} />
 
@@ -163,6 +165,7 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
+                  <label className="form-label" htmlFor="name_service">Est un client Cosider <strong style={{color:"red"}}>*</strong></label>
                   <PRDropdown
                       className="w-100"
                       id="dropdown"
@@ -170,15 +173,15 @@ return (
                       value={formData.Cosider_Client}
                       options={opt}
                       onChange={handleDropdownChange}
-                      placeholder="Select an option"
                   />
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-
-                             <InputNumber className="w-100" placeholder="Type"  name="Type_Client"
-                                         value={formData.Type_Client}
+                  <label className="form-label" htmlFor="name_service">Type <strong style={{color:"red"}}>*</strong></label>
+                             <InputText className="w-100"   name="Type_Client"
+                                        type='number'
+                                        value={formData.Type_Client}
                                          onChange={handleInputChange} />
 
 
@@ -186,6 +189,7 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
+                  <label className="form-label" htmlFor="name_service">Raison social <strong style={{color:"red"}}>*</strong></label>
                            <InputText className="w-100" placeholder="Raison Social"  name="Raison_Social"
                                           value={formData.Raison_Social}
                                           onChange={handleInputChange} />
@@ -194,7 +198,8 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                             <InputText className="w-100" placeholder="Numero Registre Commerce"   name="Numero_Registre_Commerce"
+                  <label className="form-label" htmlFor="name_service">Numero Registre Commerce <strong style={{color:"red"}}>*</strong></label>
+                             <InputText className="w-100"  name="Numero_Registre_Commerce"
                                           value={formData.Numero_Registre_Commerce}
                                           onChange={handleInputChange} />
 

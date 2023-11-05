@@ -1,14 +1,12 @@
 import * as React from "react";
-import  usr from "./user.png"
 import {useRef, useState} from "react";
 import axios  from "axios";
 import Cookies from "js-cookie";
 import {InputText} from "primereact/inputtext";
-import { Dropdown as PRDropdown } from 'primereact/dropdown';
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
 import site from './location.png';
-import {Calendar as PRCalendar} from "primereact/calendar";
+
 
 interface FormState {
   code_site:string,
@@ -40,8 +38,8 @@ const AddSiteForm: React.FC<any> = () => {
     code_division :'',
     code_commune_site :'' ,
     jour_cloture_mouv_rh_paie :'' ,
-    date_ouverture_site : null ,
-    date_cloture_site: null,
+    date_ouverture_site : '' ,
+    date_cloture_site: '',
   });
 
   const handleDropdownChange = (e:any) => {
@@ -55,7 +53,7 @@ const AddSiteForm: React.FC<any> = () => {
   };
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-
+ 
     const fd:FormData=new FormData();
 
     fd.append('code_site',formData.code_site)
@@ -100,8 +98,11 @@ const AddSiteForm: React.FC<any> = () => {
 
         })
         .catch((error:any) => {
+          toast.current?.show({ severity: 'error', summary: 'Site', detail: String(error.response.data.message), life: 3000 });
 
         });
+
+  
 
   }
 
@@ -152,7 +153,8 @@ const AddSiteForm: React.FC<any> = () => {
 
                       <div className="col-md-12 text-start">
                         <div className="mb-3">
-                          <InputText className="w-100" placeholder="code site" name="code_site"  value={formData.code_site}
+                          <label className="form-label" htmlFor="name_service">code site<strong style={{color:"red"}}>*</strong></label>
+                          <InputText className="w-100"  name="code_site"  value={formData.code_site}
                                      onChange={handleInputChange} />
 
                         </div>
@@ -162,7 +164,9 @@ const AddSiteForm: React.FC<any> = () => {
                   </div>
                   <div className="col-md-6 text-start">
                     <div className="mb-3">
-                      <InputText  className="w-100" placeholder="code filiale" name="code_filiale"
+                      <label className="form-label" htmlFor="name_service">code filiale<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText  className="w-100"  name="code_filiale"
                                   value={formData.code_filiale}
                                   onChange={handleInputChange} />
 
@@ -171,7 +175,9 @@ const AddSiteForm: React.FC<any> = () => {
                   <div className="col-md-6 text-start">
                     <div className="mb-3">
 
-                      <InputText  className="w-100" placeholder="code region" name="code_region"
+                      <label className="form-label" htmlFor="name_service">code region<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText  className="w-100"  name="code_region"
                                   value={formData.code_region}
                                   onChange={handleInputChange} />
 
@@ -181,8 +187,9 @@ const AddSiteForm: React.FC<any> = () => {
 
                   <div className="col-md-6">
                     <div className="mb-3">
+                      <label className="form-label" htmlFor="name_service">libelle site<strong style={{color:"red"}}>*</strong></label>
 
-                      <InputText className="w-100" placeholder="libelle site"  name="libelle_site"
+                      <InputText className="w-100"   name="libelle_site"
                                  value={formData.libelle_site}
                                  onChange={handleInputChange} />
 
@@ -191,7 +198,9 @@ const AddSiteForm: React.FC<any> = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <InputText className="w-100" placeholder="code agence"  name="code_agence"
+                      <label className="form-label" htmlFor="name_service">code agence<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100"  name="code_agence"
                                  value={formData.code_agence}
                                  onChange={handleInputChange} />
 
@@ -199,7 +208,9 @@ const AddSiteForm: React.FC<any> = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <InputText className="w-100" placeholder="code division"   name="code_division"
+                      <label className="form-label" htmlFor="name_service">code division<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100"    name="code_division"
                                  value={formData.code_division}
                                  onChange={handleInputChange} />
 
@@ -209,7 +220,9 @@ const AddSiteForm: React.FC<any> = () => {
 
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <InputText className="w-100" placeholder="code commune site"   name="code_commune_site"
+                      <label className="form-label" htmlFor="name_service">code commune site<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100"    name="code_commune_site"
                                  value={formData.code_commune_site}
                                  onChange={handleInputChange} />
 
@@ -219,7 +232,9 @@ const AddSiteForm: React.FC<any> = () => {
 
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <InputText className="w-100" placeholder="code commune site"   name="jour_cloture_mouv_rh_paie"
+                      <label className="form-label" htmlFor="name_service">jour cloture mouv rh paie<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100"    name="jour_cloture_mouv_rh_paie"
                                  value={formData.jour_cloture_mouv_rh_paie}
                                  onChange={handleInputChange} />
 
@@ -229,9 +244,11 @@ const AddSiteForm: React.FC<any> = () => {
 
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <PRCalendar className="w-100" placeholder="date ouverture site"   name="date_ouverture_site"
+                      <label className="form-label" htmlFor="name_service">date ouverture site<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100" placeholder="date ouverture site"   name="date_ouverture_site"
                                  value={formData.date_ouverture_site}
-                                  dateFormat="dd/mm/yy"
+                                  type="date"
                                  onChange={handleInputChange} />
 
                     </div>
@@ -239,9 +256,11 @@ const AddSiteForm: React.FC<any> = () => {
 
                   <div className="col-md-6">
                     <div className="mb-3">
-                      <PRCalendar className="w-100" placeholder="date cloture site"   name="date_cloture_site"
+                      <label className="form-label" htmlFor="name_service">date cloture site<strong style={{color:"red"}}>*</strong></label>
+
+                      <InputText className="w-100" placeholder="date cloture site"   name="date_cloture_site"
                                   value={formData.date_cloture_site}
-                                  dateFormat="dd/mm/yy"
+                                  type="date"
                                   onChange={handleInputChange} />
 
                     </div>

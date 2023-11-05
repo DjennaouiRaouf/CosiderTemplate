@@ -40,22 +40,22 @@ const ClientList: React.FC<any> = () => {
   });
 
   const cosiderClientBodyTemplate= (rowData: any) => {
-    return <i className={classNames('pi', { 'pi-check-circle': rowData.est_client_cosider, 'pi-times-circle': !rowData.est_client_cosider })}></i>;
+    return <i className={classNames('pi', { 'pi-check-circle text-success': rowData.est_client_cosider, 'pi-times-circle text-danger': !rowData.est_client_cosider })}></i>;
   };
-
+    // press  win  and click on header to multiple sorting
   return (
       <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
           <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
               <div className="card-body">
-                  <DataTable value={clients}  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-                      <Column field="code_client" header="Code" ></Column>
-                      <Column field="type_client" header="Type"  ></Column>
+                  <DataTable value={clients} sortMode="multiple"  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+                      <Column field="code_client" header="Code" sortable ></Column>
+                      <Column field="type_client" header="Type" sortable ></Column>
                       <Column field="libelle_client" header="Libelle"  ></Column>
-                      <Column field="nif" header="NIF" ></Column>
-                      <Column field="raison_social" header="Raison social" ></Column>
-                      <Column field="num_registre_commerce" header="Registre commerce" ></Column>
-                      <Column field="est_client_cosider" header="Cosider Client" dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
+                      <Column field="nif" header="NIF"  ></Column>
+                      <Column field="raison_social" header="Raison social" sortable ></Column>
+                      <Column field="num_registre_commerce" header="Registre commerce" sortable ></Column>
+                      <Column field="est_client_cosider" header="Cosider Client" sortable dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
                   </DataTable>
               </div>
           </div>
