@@ -72,6 +72,10 @@ const NavigationBar: React.FC<any> = () => {
                 <NavDropdown.Item href="/ajout_c">Ajouter un client</NavDropdown.Item>
                 <NavDropdown.Item href="/liste_c">Lister les clients</NavDropdown.Item>
               </NavDropdown>
+              <NavDropdown title="Sites" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/ajout_s">Ajouter un site</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_s">Lister les sites</NavDropdown.Item>
+              </NavDropdown>
 
 
             </Nav>

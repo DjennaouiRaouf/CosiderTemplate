@@ -205,7 +205,9 @@ return (
                   className="col-md-12"
                   style={{ textAlign: "right", marginTop: 5 }}
               >
-                <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded />
+                <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded
+                           icon={
+                             <i className="fas fa-user-plus" style={{marginRight:"10px"}}></i>}/>
 
               </div>
             </div>
