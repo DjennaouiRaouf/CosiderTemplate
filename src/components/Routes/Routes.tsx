@@ -7,6 +7,7 @@ import ClientList from "../Clients/ClientList/ClientList";
 import Home from "../Home/Home";
 import Cookies from "js-cookie";
 import AddSiteForm from "../Site/AddSiteForm/AddSiteForm";
+import SiteList from "../Site/SiteList/SiteList";
 
 
 
@@ -73,6 +74,19 @@ const Routes: React.FC<any> = () => {
                       <>
                           <NavigationBar />
                           <AddSiteForm />
+                      </>
+                  ): (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          <Route
+              path="/liste_s"
+              element={
+                  Cookies.get('token')? (
+                      <>
+                          <NavigationBar />
+                          <SiteList />
                       </>
                   ): (
                       <Navigate to="/"  />
