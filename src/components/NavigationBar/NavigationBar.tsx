@@ -91,7 +91,7 @@ const NavigationBar: React.FC<any> = () => {
                       <span className="d-none d-lg-inline me-2 text-gray-600 small">
                         {username}
                       </span>
-                    <Avatar name={username} size="40" round={true} src={""}
+                    <Avatar name={username} size="50" round={true} src={""}
 
                     />
                   </a>

@@ -3,7 +3,6 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from "axios";
 import Cookies from "js-cookie";
-import {classNames} from "primereact/utils";
 
 interface Site{
   code_site:string,
