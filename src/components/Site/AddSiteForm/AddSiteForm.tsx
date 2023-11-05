@@ -8,6 +8,7 @@ import { Dropdown as PRDropdown } from 'primereact/dropdown';
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
 import site from './location.png';
+import {Calendar as PRCalendar} from "primereact/calendar";
 
 interface FormState {
   code_site:string,
@@ -19,8 +20,8 @@ interface FormState {
   code_division :string,
   code_commune_site :string ,
   jour_cloture_mouv_rh_paie :string ,
-  date_ouverture_site : string ,
-  date_cloture_site: string ,
+  date_ouverture_site : any ,
+  date_cloture_site: any ,
 }
 interface Opt {
   value:boolean;
@@ -39,8 +40,8 @@ const AddSiteForm: React.FC<any> = () => {
     code_division :'',
     code_commune_site :'' ,
     jour_cloture_mouv_rh_paie :'' ,
-    date_ouverture_site : '' ,
-    date_cloture_site: ''
+    date_ouverture_site : null ,
+    date_cloture_site: null,
   });
 
   const handleDropdownChange = (e:any) => {
@@ -56,17 +57,21 @@ const AddSiteForm: React.FC<any> = () => {
     e.preventDefault();
 
     const fd:FormData=new FormData();
-    /*
-    fd.append("code_client",formData.Code_Client );
-    fd.append("type_client",formData.Type_Client );
-    fd.append("est_client_cosider",formData.Cosider_Client.toString());
-    fd.append("libelle_client",formData.Libelle_Client );
-    fd.append("nif", formData.NIF);
-    fd.append("raison_social",formData.Raison_Social);
-    fd.append("num_registre_commerce",formData.Numero_Registre_Commerce );
+
+    fd.append('code_site',formData.code_site)
+    fd.append('code_filiale',formData.code_filiale)
+    fd.append('code_region',formData.code_region)
+    fd.append('libelle_site',formData.libelle_site)
+    fd.append('code_agence',formData.code_agence)
+    fd.append('type_site',formData.type_site.toString())
+    fd.append('code_division',formData.code_division)
+    fd.append('code_commune_site',formData.code_commune_site)
+    fd.append('jour_cloture_mouv_rh_paie',formData.jour_cloture_mouv_rh_paie)
+    fd.append('date_ouverture_site',formData.date_ouverture_site)
+    fd.append('date_cloture_site',formData.date_cloture_site)
 
     // Form is valid, submit the data or perform other actions
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addclient/`,fd,{
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addsite/`,fd,{
       headers: {
         Authorization: `Token ${Cookies.get("token")}`,
         'Content-Type': 'application/json',
@@ -97,7 +102,7 @@ const AddSiteForm: React.FC<any> = () => {
         .catch((error:any) => {
 
         });
-*/
+
   }
 
 
@@ -116,7 +121,7 @@ const AddSiteForm: React.FC<any> = () => {
       <div>
         <PRToast ref={toast} position="top-right" />
 
-        <div className="container-fluid" style={{marginTop:"20px"}}>
+        <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
           <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
             <div className="card-body">
@@ -200,6 +205,51 @@ const AddSiteForm: React.FC<any> = () => {
 
                     </div>
                   </div>
+
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <InputText className="w-100" placeholder="code commune site"   name="code_commune_site"
+                                 value={formData.code_commune_site}
+                                 onChange={handleInputChange} />
+
+                    </div>
+                  </div>
+
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <InputText className="w-100" placeholder="code commune site"   name="jour_cloture_mouv_rh_paie"
+                                 value={formData.jour_cloture_mouv_rh_paie}
+                                 onChange={handleInputChange} />
+
+                    </div>
+                  </div>
+
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <PRCalendar className="w-100" placeholder="date ouverture site"   name="date_ouverture_site"
+                                 value={formData.date_ouverture_site}
+                                  dateFormat="dd/mm/yy"
+                                 onChange={handleInputChange} />
+
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <PRCalendar className="w-100" placeholder="date cloture site"   name="date_cloture_site"
+                                  value={formData.date_cloture_site}
+                                  dateFormat="dd/mm/yy"
+                                  onChange={handleInputChange} />
+
+                    </div>
+                  </div>
+
+
+
+
 
                   <div
                       className="col-md-12"

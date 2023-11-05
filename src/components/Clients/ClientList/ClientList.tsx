@@ -44,15 +44,24 @@ const ClientList: React.FC<any> = () => {
   };
 
   return (
-      <DataTable value={clients}  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-        <Column field="code_client" header="Code" ></Column>
-        <Column field="type_client" header="Type"  ></Column>
-        <Column field="libelle_client" header="Libelle"  ></Column>
-        <Column field="nif" header="NIF" ></Column>
-        <Column field="raison_social" header="Raison social" ></Column>
-        <Column field="num_registre_commerce" header="Registre commerce" ></Column>
-        <Column field="est_client_cosider" header="Cosider Client" dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
-      </DataTable>
+      <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
+
+          <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
+              <div className="card-body">
+                  <DataTable value={clients}  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+                      <Column field="code_client" header="Code" ></Column>
+                      <Column field="type_client" header="Type"  ></Column>
+                      <Column field="libelle_client" header="Libelle"  ></Column>
+                      <Column field="nif" header="NIF" ></Column>
+                      <Column field="raison_social" header="Raison social" ></Column>
+                      <Column field="num_registre_commerce" header="Registre commerce" ></Column>
+                      <Column field="est_client_cosider" header="Cosider Client" dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
+                  </DataTable>
+              </div>
+          </div>
+      </div>
+
+
 
   );
 };

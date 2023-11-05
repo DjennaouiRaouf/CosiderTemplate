@@ -104,7 +104,7 @@ return (
     <div>
       <PRToast ref={toast} position="top-right" />
 
-      <div className="container-fluid" style={{marginTop:"20px"}}>
+      <div className="container-fluid" style={{marginTop:"20px" , width:"100%"}}>
 
       <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
         <div className="card-body">
