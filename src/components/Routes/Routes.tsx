@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
 import {Routes as Router, Route, Navigate} from 'react-router-dom'
-import { AuthContext } from '../Context/AuthContext';
 import LoginForm from "../LoginForm/LoginForm";
 import AddClientForm from "../Clients/AddClientForm/AddClientForm";
 import NavigationBar from "../NavigationBar/NavigationBar";
 import ClientList from "../Clients/ClientList/ClientList";
 import Home from "../Home/Home";
+import Cookies from "js-cookie";
 
 
 
 const Routes: React.FC<any> = () => {
-  const { authenticated } = useContext(AuthContext)
+
 
 
   return (
@@ -18,17 +18,17 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/"
               element={
-                  ! authenticated ? (
+                  ! Cookies.get('token') ? (
                       <LoginForm />
                   ) : (
-                      <Navigate to="/ajout_c"  />
+                      <Navigate to="/home"  />
                   )
               }
           />
           <Route
               path="/home"
               element={
-                  authenticated? (
+                  Cookies.get('token')? (
                       <>
                           <NavigationBar />
                           <Home/>
@@ -42,22 +42,26 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/ajout_c"
               element={
-                   authenticated && (
+                   Cookies.get('token') ? (
                        <>
                            <NavigationBar />
                             <AddClientForm />
                        </>
+                  ): (
+                  <Navigate to="/"  />
                   )
               }
           />
           <Route
               path="/liste_c"
               element={
-                  authenticated && (
+                  Cookies.get('token')? (
                       <>
                           <NavigationBar />
                           <ClientList />
                       </>
+                  ): (
+                      <Navigate to="/"  />
                   )
               }
           />

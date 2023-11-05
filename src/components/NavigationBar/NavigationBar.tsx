@@ -6,10 +6,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
-import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+
 import Cookies from "js-cookie";
-import {AuthContext} from "../Context/AuthContext";
 
 
 
@@ -17,8 +16,6 @@ import {AuthContext} from "../Context/AuthContext";
 
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
-  const navigate=useNavigate();
-  const {authenticated, setAuthenticated} = useContext(AuthContext);
   const logout = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
       withCredentials:true,
@@ -27,8 +24,7 @@ const NavigationBar: React.FC<any> = () => {
       }
     })
         .then((response: any) => {
-          setAuthenticated(null)
-          navigate('/');
+          window.location.href='/'
         })
         .catch((error: any) => {
         });

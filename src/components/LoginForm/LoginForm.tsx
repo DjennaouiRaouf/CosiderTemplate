@@ -4,11 +4,13 @@ import login from "./login.png"
 import {Carousel} from "react-bootstrap";
 import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import { AuthContext } from "../Context/AuthContext";
+
 import Cookies from "js-cookie";
 import { InputText } from "primereact/inputtext";
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
+import {useNavigate} from "react-router-dom";
+import navigationBar from "../NavigationBar/NavigationBar";
 
 
 
@@ -20,13 +22,12 @@ import {Toast as PRToast} from "primereact/toast";
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
-
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
-  const {authenticated, setAuthenticated} = useContext(AuthContext);
+
 
 
   const toast = useRef<PRToast>(null);
@@ -58,9 +59,7 @@ const LoginForm: React.FC<any> = () => {
       withCredentials:true,
     })
         .then((response:any) => {
-          setAuthenticated(String(Cookies.get("token")))
-
-
+          window.location.href='/home'
         })
         .catch((error:any) => {
           toast.current?.show({ severity: 'error', summary: 'Connexion', detail: String(error.response.data.message), life: 3000 });
