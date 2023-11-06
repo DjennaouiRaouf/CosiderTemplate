@@ -40,16 +40,16 @@ const SiteList: React.FC<any> = () => {
   }
   useEffect(() => {
     getSites()
-  });
+  },[sites]);
 
 
   // press  win  and click on header to multiple sorting
   return (
       <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
-        <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
+        <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
           <div className="card-body">
-            <DataTable value={sites} sortMode="multiple"  columnResizeMode="expand" resizableColumns showGridlines paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+            <DataTable value={sites} sortMode="multiple"  columnResizeMode="expand" resizableColumns  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
               <Column field="code_site" header="code_site" sortable ></Column>
               <Column field="code_filiale" header="code_filiale" sortable ></Column>
               <Column field="code_region" header="code_region"  ></Column>
