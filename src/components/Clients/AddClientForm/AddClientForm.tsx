@@ -78,11 +78,14 @@ const AddClientForm: React.FC<any> = () => {
             Cosider_Client:false,
 
           })
+
           toast.current?.show({ severity: 'success', summary: 'Client', detail: String(response.data.message), life: 3000 });
 
 
         })
         .catch((error:any) => {
+
+         toast.current?.show({ severity: 'error', summary: 'Client', detail: String(error.response.data.detail), life: 3000 });
 
         });
 

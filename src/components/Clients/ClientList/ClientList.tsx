@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from "axios";
 import Cookies from "js-cookie";
 import {classNames} from "primereact/utils";
+import {Toast as PRToast} from "primereact/toast";
 
 interface Client {
   code_client : string,
@@ -19,7 +20,7 @@ interface Client {
 const ClientList: React.FC<any> = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [countByCC, setCountByCC] = useState<Record<string, number>>({});
-
+  const toast = useRef<PRToast>(null);
   const getClients = async() => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/getclients/`,{
       headers: {
@@ -30,7 +31,8 @@ const ClientList: React.FC<any> = () => {
           setClients(response.data);
         })
         .catch((error) => {
-          console.error('Error:', error);
+            toast.current?.show({ severity: 'error', summary: 'Client', detail: String(error.response.data.detail), life: 3000 });
+
         });
   }
 
@@ -38,9 +40,9 @@ const ClientList: React.FC<any> = () => {
 
   useEffect(() => {
     getClients()
-  });
+  },[clients]);
   useEffect(() => {
-        // Count objects by gender when the data changes
+
         const counts: Record<string, number> = {};
         clients.forEach((obj) => {
             const cc:any = obj.est_client_cosider;
@@ -59,6 +61,8 @@ const ClientList: React.FC<any> = () => {
   };
     // press  win  and click on header to multiple sorting
   return (
+      <>
+      <PRToast ref={toast} position="top-right" />
       <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
           <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
@@ -113,6 +117,7 @@ const ClientList: React.FC<any> = () => {
               </div>
           </div>
       </div>
+      </>
 
 
 

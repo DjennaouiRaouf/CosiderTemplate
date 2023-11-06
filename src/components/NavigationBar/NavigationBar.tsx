@@ -67,7 +67,11 @@ const NavigationBar: React.FC<any> = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Marché</Nav.Link>
+              <Nav.Link href="#home"></Nav.Link>
+              <NavDropdown title="Marchés" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/ajout_c">Ajouter un Marché</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_c">Lister les Marchés</NavDropdown.Item>
+              </NavDropdown>
               <NavDropdown title="Clients" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/ajout_c">Ajouter un client</NavDropdown.Item>
                 <NavDropdown.Item href="/liste_c">Lister les clients</NavDropdown.Item>

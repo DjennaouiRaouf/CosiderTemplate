@@ -111,7 +111,7 @@ const LoginForm: React.FC<any> = () => {
                         borderBottomLeftRadius: 6
                       }}
                   >
-                    <Carousel className="w-100 d-block" controls={false} interval={3000} fade={true} indicators={true} >
+                    <Carousel className="w-100 d-block" controls={false} interval={2000} fade={true} indicators={true} >
                       {pics.map((item,index) => (
                           <Carousel.Item key={index}>
                             <img
