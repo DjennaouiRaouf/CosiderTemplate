@@ -32,7 +32,6 @@ const ClientList: React.FC<any> = () => {
         })
         .catch((error) => {
             toast.current?.show({ severity: 'error', summary: 'Client', detail: String(error.response.data.detail), life: 3000 });
-
         });
   }
 
