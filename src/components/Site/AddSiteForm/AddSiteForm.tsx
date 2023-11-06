@@ -98,8 +98,8 @@ const AddSiteForm: React.FC<any> = () => {
 
         })
         .catch((error:any) => {
-          console.log(error)
-          toast.current?.show({ severity: 'error', summary: 'Site', detail: String(error.response.data.message), life: 3000 });
+          toast.current?.show({ severity: 'error', summary: 'Site', detail: String(error.response.data.detail), life: 3000 });
+
 
         });
 
@@ -120,7 +120,7 @@ const AddSiteForm: React.FC<any> = () => {
 
   ];
   return (
-      <div>
+      <>
         <PRToast ref={toast} position="top-right" />
 
         <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
@@ -285,7 +285,7 @@ const AddSiteForm: React.FC<any> = () => {
             </div>
           </div>
         </div>
-      </div>
+      </>
 
 
 

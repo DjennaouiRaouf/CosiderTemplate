@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from "axios";
 import Cookies from "js-cookie";
+import {Toast as PRToast} from "primereact/toast";
 
 interface Site{
   code_site:string,
@@ -20,7 +21,7 @@ interface Site{
 
 const SiteList: React.FC<any> = () => {
   const [sites, setSites] = useState<Site[]>([]);
-
+  const toast = useRef<PRToast>(null);
   const getSites = async() => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/getsites/`,{
       headers: {
@@ -33,7 +34,8 @@ const SiteList: React.FC<any> = () => {
 
         })
         .catch((error) => {
-          console.error('Error:', error);
+          toast.current?.show({ severity: 'error', summary: 'Site', detail: String(error.response.data.detail), life: 3000 });
+
         });
 
 
@@ -45,6 +47,8 @@ const SiteList: React.FC<any> = () => {
 
   // press  win  and click on header to multiple sorting
   return (
+      <>
+        <PRToast ref={toast} position="top-right" />
       <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
         <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
@@ -69,6 +73,7 @@ const SiteList: React.FC<any> = () => {
           </div>
         </div>
       </div>
+      </>
 
 
 
