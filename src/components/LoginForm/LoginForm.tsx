@@ -1,16 +1,14 @@
 import * as React from "react";
 import login from "./login.png"
-
 import {Carousel} from "react-bootstrap";
 import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
-
-import Cookies from "js-cookie";
 import { InputText } from "primereact/inputtext";
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
+import {AuthContext} from "../Context/AuthContext/AuthContext";
+import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
-import navigationBar from "../NavigationBar/NavigationBar";
 
 
 
@@ -31,8 +29,8 @@ const LoginForm: React.FC<any> = () => {
 
 
   const toast = useRef<PRToast>(null);
-
-
+  const { authenticated,setAuthenticated } = useContext(AuthContext);
+  const navigate=useNavigate();
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/ic_images/`,{
       headers:{
@@ -59,7 +57,8 @@ const LoginForm: React.FC<any> = () => {
       withCredentials:true,
     })
         .then((response:any) => {
-          window.location.href='/home'
+          setAuthenticated(Cookies.get("token"))
+          navigate('/home');
         })
         .catch((error:any) => {
           toast.current?.show({ severity: 'error', summary: 'Connexion', detail: String(error.response.data.message), life: 3000 });

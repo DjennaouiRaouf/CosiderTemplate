@@ -6,9 +6,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Avatar from "react-avatar";
 import logo from "./logo.png"
 import axios from "axios";
-import {useEffect, useState} from "react";
-
+import {useContext, useEffect, useState} from "react";
 import Cookies from "js-cookie";
+import {AuthContext} from "../Context/AuthContext/AuthContext";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -16,6 +17,8 @@ import Cookies from "js-cookie";
 
 const NavigationBar: React.FC<any> = () => {
   const[username,setUsername]=useState("");
+  const { authenticated,setAuthenticated } = useContext(AuthContext);
+  const navigate=useNavigate();
   const logout = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/logout/`,{
       withCredentials:true,
@@ -24,7 +27,9 @@ const NavigationBar: React.FC<any> = () => {
       }
     })
         .then((response: any) => {
-          window.location.href='/'
+          setAuthenticated(null);
+
+
         })
         .catch((error: any) => {
         });
@@ -51,6 +56,9 @@ const NavigationBar: React.FC<any> = () => {
     whoami();
   });
 
+  const link = (url:string) => {
+      navigate(url);
+  }
 
 
 
@@ -69,8 +77,8 @@ const NavigationBar: React.FC<any> = () => {
             <Nav className="me-auto">
               <Nav.Link href="#home"></Nav.Link>
               <NavDropdown title="Marchés" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/ajout_c">Ajouter un Marché</NavDropdown.Item>
-                <NavDropdown.Item href="/liste_c">Lister les Marchés</NavDropdown.Item>
+                <NavDropdown.Item href="/ajout_m">Ajouter un Marché</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_m">Lister les Marchés</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Clients" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/ajout_c">Ajouter un client</NavDropdown.Item>

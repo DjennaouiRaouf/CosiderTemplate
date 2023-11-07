@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, {useContext} from 'react'
 import {Routes as Router, Route, Navigate} from 'react-router-dom'
 import LoginForm from "../LoginForm/LoginForm";
 import AddClientForm from "../Clients/AddClientForm/AddClientForm";
@@ -8,19 +8,18 @@ import Home from "../Home/Home";
 import Cookies from "js-cookie";
 import AddSiteForm from "../Site/AddSiteForm/AddSiteForm";
 import SiteList from "../Site/SiteList/SiteList";
+import {AuthContext} from "../Context/AuthContext/AuthContext";
 
 
 
 const Routes: React.FC<any> = () => {
-
-
-
+    const { authenticated } = useContext(AuthContext);
   return (
       <Router>
           <Route
               path="/"
               element={
-                  ! Cookies.get('token') ? (
+                  ! authenticated ? (
                       <LoginForm />
                   ) : (
                       <Navigate to="/home"  />
@@ -30,7 +29,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/home"
               element={
-                  Cookies.get('token') ? (
+                  authenticated ? (
                       <>
                           <NavigationBar />
                           <Home/>
@@ -44,7 +43,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/ajout_c"
               element={
-                   Cookies.get('token') ? (
+                   authenticated ? (
                        <>
                            <NavigationBar />
                             <AddClientForm />
@@ -57,7 +56,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/liste_c"
               element={
-                  Cookies.get('token')? (
+                  authenticated? (
                       <>
                           <NavigationBar />
                           <ClientList />
@@ -70,7 +69,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/ajout_s"
               element={
-                  Cookies.get('token')? (
+                  authenticated ? (
                       <>
                           <NavigationBar />
                           <AddSiteForm />
@@ -83,7 +82,7 @@ const Routes: React.FC<any> = () => {
           <Route
               path="/liste_s"
               element={
-                  Cookies.get('token')? (
+                  authenticated ? (
                       <>
                           <NavigationBar />
                           <SiteList />
