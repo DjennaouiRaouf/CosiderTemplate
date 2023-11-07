@@ -49,7 +49,8 @@ const LoginForm: React.FC<any> = () => {
 
 
 
-  const authentification = async() => {
+  const authentification = async(e: React.FormEvent) => {
+    e.preventDefault();
     const fd = new FormData();
     fd.append('username', formData.username);
     fd.append('password', formData.password);
@@ -84,100 +85,62 @@ const LoginForm: React.FC<any> = () => {
 
   return (
 
-    <div>
-      <PRToast ref={toast} position="top-right" />
-          <div className="container"  style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: "50%",
-            transform: "translateY(-50%)",
-            msTransform: "translateY(-50%)",
-            WebkitTransform: "translateY(-50%)",
-            OTransform: "translateY(-50%)"
-          }}>
-            <div
-                className="card shadow-lg o-hidden border-0 my-5"
-                style={{ height: 500 }}
-            >
-              <div className="card-body p-0">
-                <div className="row" style={{ height: "100%" }}>
-                  <div
-                      className="col-lg-6 d-none d-lg-flex justify-content-lg-center align-items-lg-center"
-                      style={{
-                        background: "rgba(255,255,254,0)",
-                        borderTopLeftRadius: 6,
-                        borderBottomLeftRadius: 6
-                      }}
-                  >
-                    <Carousel className="w-100 d-block" controls={false} interval={2000} fade={true} indicators={true} >
-                      {pics.map((item,index) => (
-                          <Carousel.Item key={index}>
-                            <img
-                                src={item.src}
-                                alt={""}
-                                height={500}
-                                className="d-block w-100"
-                            />
-                            <Carousel.Caption style={{background:item.color}}>
-                              <h3>{item.caption}</h3>
-                              <p>
-                                {item.altText}
-                              </p>
-                            </Carousel.Caption>
-                          </Carousel.Item>
-                      ))}
-                    </Carousel>
+      <>
+        <PRToast ref={toast} position="top-right" />
 
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="p-5" style={{ height: "100%" }}>
-                      <div className="text-center">
-                        <h4
-                            className="text-dark mb-4"
-                            style={{ height: "60.8px", fontSize: 44, marginTop: 9 }}
-                        >
-                          <img
-                              src={login}
-                              width={58}
-                              height={57}
-                              style={{ marginBottom: 9 }}
-                          />
-                        </h4>
-                      </div>
-                      <div className="user">
-                        <div className="mb-3">
-                          <InputText className="w-100"  id="username"
-                                     name="username" placeholder="Nom d'utilisateur" value={formData.username}
-                                     onChange={handleInputChange} />
+        <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{borderRadius:"8px",
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "50%",
+          transform: "translateY(-50%)",
+          msTransform: "translateY(-50%)",
+          WebkitTransform: "translateY(-50%)",
+          OTransform: "translateY(-50%)"
 
-                        </div>
-                        <div className="mb-3">
-                             <InputText className="w-100"  id="password"
-                                        onChange={handleInputChange}
-                                        name="password" placeholder="Mot de passe"  value={formData.password} type="password" />
-                        </div>
-                        <div className="mb-3">
-                          <div className="custom-control custom-checkbox small" />
-                        </div>
-                        <PRButton  className="w-100" style={{ background: "#df162c", borderWidth: 0 }} onClick={authentification} label="Connexion"  />
+        }}>
+          <div className="row align-items-center g-lg-5 py-5">
+            <div className="col-lg-7 text-center text-lg-start" >
+              <Carousel className="w-100 d-block" controls={false} interval={2000} fade={true} indicators={true} style={{borderWidth: "1px",borderRadius: "8px"}}>
+                {pics.map((item,index) => (
+                    <Carousel.Item key={index}  style={{borderWidth: "1px",borderRadius: "8px"}}>
+                      <img
+                          src={item.src}
+                          alt={""}
+                          height={500}
+                          className="d-block w-100"
+                          style={{borderWidth: "1px",borderRadius: "8px"}}
+                      />
 
+                    </Carousel.Item>
+                ))}
+              </Carousel>
 
-                        <hr />
-                      </div>
+            </div>
+            <div className="col-md-10 col-lg-5 mx-auto">
+              <form className="bg-body-tertiary p-4 p-md-5 border rounded-3" onSubmit={authentification}>
+                <div className="form-floating mb-3">
+                  <InputText className="w-100"  id="username"
+                             name="username" placeholder="Nom d'utilisateur" value={formData.username}
+                             onChange={handleInputChange} />
 
-                      <div className="text-center">
-                        <a className="small">
-                          Créer un compte!
-                        </a>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
+                <div className="form-floating mb-3">
+                  <InputText className="w-100"  id="password"
+                             onChange={handleInputChange}
+                             name="password" placeholder="Mot de passe"  value={formData.password} type="password" />
+
+                </div>
+
+                <PRButton type="submit" className="w-100" style={{ background: "#df162c", borderWidth: 0 }} label="Connexion"  />
+                <hr className="my-4" />
+
+              </form>
             </div>
           </div>
-    </div>
+        </div>
+      </>
+
 
   );
 };

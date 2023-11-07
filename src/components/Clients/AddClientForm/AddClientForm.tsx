@@ -104,7 +104,7 @@ const opt:Opt[] = [
 
 ];
 return (
-    <div>
+    <>
       <PRToast ref={toast} position="top-right" />
 
       <div className="container-fluid" style={{marginTop:"20px" , width:"100%"}}>
@@ -223,7 +223,7 @@ return (
         </div>
       </div>
       </div>
-    </div>
+    </>
 
 
 
