@@ -117,12 +117,12 @@ return (
                   className="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
                   style={{ display: "inline", textAlign: "center", marginBottom: 25 }}
               >
-                <img
-                    className="rounded-circle mb-3 mt-4 img-fluid"
-                    src={usr}
-                    style={{ display: "inline", maxHeight: 110 }}
-                    width={112}
-                    height={110}
+                <div
+                    style={{
+                      height: "100%",
+                      background: `url(${usr}) center / auto no-repeat`,
+
+                    }}
                 />
                 <br />
               </div>
@@ -138,7 +138,12 @@ return (
 
                   <div className="col-md-12 text-start">
                     <div className="mb-3">
-                      <label className="form-label" htmlFor="name_service">Code Client <strong style={{color:"red"}}>*</strong></label>
+                      <label className="form-label" >
+                        <strong>
+                          Code Client{" "}
+                          <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                        </strong>
+                      </label>
                              <InputText className="w-100"  name="Code_Client"  value={formData.Code_Client}
                                         onChange={handleInputChange} />
 
@@ -149,7 +154,12 @@ return (
               </div>
               <div className="col-md-6 text-start">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">Libelle <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      Libelle{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                              <InputText  className="w-100"  name="Libelle_Client"
                                          value={formData.Libelle_Client}
                                          onChange={handleInputChange} />
@@ -158,7 +168,12 @@ return (
               </div>
               <div className="col-md-6 text-start">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">NIF <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      NIF{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                              <InputText  className="w-100"  name="NIF"
                                          value={formData.NIF}
                                          onChange={handleInputChange} />
@@ -168,7 +183,12 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">Est un client Cosider <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      Est Client cosider{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                   <PRDropdown
                       className="w-100"
                       id="dropdown"
@@ -181,7 +201,12 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">Type <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      Type{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                              <InputText className="w-100"   name="Type_Client"
                                         type='number'
                                         value={formData.Type_Client}
@@ -192,7 +217,12 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">Raison social <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      Raison social{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                            <InputText className="w-100" placeholder="Raison Social"  name="Raison_Social"
                                           value={formData.Raison_Social}
                                           onChange={handleInputChange} />
@@ -201,7 +231,12 @@ return (
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="name_service">Numero Registre Commerce <strong style={{color:"red"}}>*</strong></label>
+                  <label className="form-label" >
+                    <strong>
+                      Numero Registre Commerce{" "}
+                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                    </strong>
+                  </label>
                              <InputText className="w-100"  name="Numero_Registre_Commerce"
                                           value={formData.Numero_Registre_Commerce}
                                           onChange={handleInputChange} />

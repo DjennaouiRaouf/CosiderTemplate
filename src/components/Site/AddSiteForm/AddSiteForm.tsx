@@ -6,6 +6,7 @@ import {InputText} from "primereact/inputtext";
 import { Button as PRButton } from 'primereact/button';
 import {Toast as PRToast} from "primereact/toast";
 import site from './location.png';
+import contrat from "../../Marche/AddMarcheForm/contract.png";
 
 
 interface FormState {
@@ -21,10 +22,7 @@ interface FormState {
   date_ouverture_site : any ,
   date_cloture_site: any ,
 }
-interface Opt {
-  value:boolean;
-  label:string;
-}
+
 const AddSiteForm: React.FC<any> = () => {
 
   const toast = useRef<PRToast>(null);
@@ -42,10 +40,7 @@ const AddSiteForm: React.FC<any> = () => {
     date_cloture_site: '',
   });
 
-  const handleDropdownChange = (e:any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: e.value });
-  };
+
 
   const handleInputChange = (e:any) => {
     const { name, value } = e.target;
@@ -108,17 +103,7 @@ const AddSiteForm: React.FC<any> = () => {
   }
 
 
-  const opt:Opt[] = [
-    {
-      value: false,
-      label: 'Non',
-    },
-    {
-      value: true,
-      label: 'Oui',
-    },
 
-  ];
   return (
       <>
         <PRToast ref={toast} position="top-right" />
@@ -133,13 +118,14 @@ const AddSiteForm: React.FC<any> = () => {
                       className="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
                       style={{ display: "inline", textAlign: "center", marginBottom: 25 }}
                   >
-                    <img
-                        className="rounded-circle mb-3 mt-4 img-fluid"
-                        src={site}
-                        style={{ display: "inline", maxHeight: 110 }}
-                        width={112}
-                        height={110}
+                    <div
+                        style={{
+                          height: "100%",
+                          background: `url(${site}) center / auto no-repeat`,
+
+                        }}
                     />
+
                     <br />
                   </div>
                   <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">

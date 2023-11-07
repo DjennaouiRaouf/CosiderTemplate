@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import AddSiteForm from "../Site/AddSiteForm/AddSiteForm";
 import SiteList from "../Site/SiteList/SiteList";
 import {AuthContext} from "../Context/AuthContext/AuthContext";
+import AddMarcheForm from "../Marche/AddMarcheForm/AddMarcheForm";
 
 
 
@@ -86,6 +87,19 @@ const Routes: React.FC<any> = () => {
                       <>
                           <NavigationBar />
                           <SiteList />
+                      </>
+                  ): (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          <Route
+              path="/ajout_m"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar />
+                          <AddMarcheForm />
                       </>
                   ): (
                       <Navigate to="/"  />
