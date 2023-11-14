@@ -76,10 +76,7 @@ const NavigationBar: React.FC<any> = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="#home"></Nav.Link>
-              <NavDropdown title="Marchés" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/ajout_m">Ajouter un Marché</NavDropdown.Item>
-                <NavDropdown.Item href="/liste_m">Lister les Marchés</NavDropdown.Item>
-              </NavDropdown>
+
               <NavDropdown title="Clients" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/ajout_c">Ajouter un client</NavDropdown.Item>
                 <NavDropdown.Item href="/liste_c">Lister les clients</NavDropdown.Item>
@@ -88,6 +85,15 @@ const NavigationBar: React.FC<any> = () => {
                 <NavDropdown.Item href="/ajout_s">Ajouter un site</NavDropdown.Item>
                 <NavDropdown.Item href="/liste_s">Lister les sites</NavDropdown.Item>
               </NavDropdown>
+              <NavDropdown title="Marchés" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/ajout_m">Ajouter un Marché</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_m">Lister les Marchés</NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="DQE" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/ajout_dqe">Ajouter un DQE</NavDropdown.Item>
+                <NavDropdown.Item href="/liste_s">Lister les DQE</NavDropdown.Item>
+              </NavDropdown>
+
 
 
             </Nav>

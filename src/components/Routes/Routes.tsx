@@ -10,6 +10,8 @@ import AddSiteForm from "../Site/AddSiteForm/AddSiteForm";
 import SiteList from "../Site/SiteList/SiteList";
 import {AuthContext} from "../Context/AuthContext/AuthContext";
 import AddMarcheForm from "../Marche/AddMarcheForm/AddMarcheForm";
+import MarcheList from "../Marche/MarcheList/MarcheList"
+import DQE from "../Marche/DQE/DQE";
 
 
 
@@ -106,6 +108,33 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+          <Route
+              path="/liste_m"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar />
+                          <MarcheList />
+                      </>
+                  ): (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          <Route
+              path="/ajout_dqe"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar />
+                          <DQE />
+                      </>
+                  ): (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
       </Router>
 
   )

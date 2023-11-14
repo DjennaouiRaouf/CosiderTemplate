@@ -85,7 +85,7 @@ const AddClientForm: React.FC<any> = () => {
         })
         .catch((error:any) => {
 
-         toast.current?.show({ severity: 'error', summary: 'Client', detail: String(error.response.data.detail), life: 3000 });
+          toast.current?.show({ severity: 'error', summary: 'Client', detail: String(error.response.data.detail), life: 3000 });
 
         });
 

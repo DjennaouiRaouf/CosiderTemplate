@@ -1,13 +1,17 @@
 import * as React from "react";
 import {Button as PRButton} from "primereact/button";
 import {Dropdown as PRDropdown} from "primereact/dropdown";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {InputText} from "primereact/inputtext";
 import {InputNumber} from "primereact/inputnumber";
 import contrat from './contract.png'
+import axios from "axios";
+import Cookies from "js-cookie";
+import {Toast as PRToast} from "primereact/toast";
+import {InputSwitch} from "primereact/inputswitch";
+import {Console} from "inspector";
 
 interface FormState {
-    avenant:number,
     code_site:string,
     num_nt:string,
     libelle : string,
@@ -17,17 +21,20 @@ interface FormState {
     rabais:number,
     tva:number,
     num_contrat:string,
-    date_signature:string
+    date_signature:string,
+    nouveau:boolean,
 
 }
+
+
 interface Opt {
     value:boolean;
     label:string;
 }
 
 const AddMarcheForm: React.FC<any> = () => {
+    const toast = useRef<PRToast>(null);
     const [formData, setFormData] = useState<FormState>({
-        avenant:0,
         code_site:"",
         num_nt:"",
         libelle : "",
@@ -37,9 +44,11 @@ const AddMarcheForm: React.FC<any> = () => {
         rabais:0,
         tva:0,
         num_contrat:"",
-        date_signature:""
+        date_signature:"",
+        nouveau:true,
+
     });
-    const[est_avenant,setEst_Avenent]=useState(false)
+
     const opt:Opt[] = [
         {
             value: true,
@@ -56,16 +65,66 @@ const AddMarcheForm: React.FC<any> = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+
     const handleDropdownChange = (e:any) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: e.value });
     };
-    const submit = (e:any) => {
+    const submit = async(e:any) => {
         e.preventDefault();
+        const fd:FormData=new FormData();
+        fd.append("code_site",formData.code_site);
+        fd.append("num_nt",formData.num_nt);
+        fd.append("libelle",formData.libelle);
+        fd.append("ods_depart",formData.ods_depart);
+        fd.append("delais",formData.delais.toString());
+        fd.append("revisable",formData.revisable.toString());
+        fd.append("rabais",formData.rabais.toString());
+        fd.append("tva",formData.tva.toString());
+        fd.append("num_contrat",formData.num_contrat);
+        fd.append("date_signature",formData.date_signature);
+        fd.append("nouveau",formData.nouveau.toString());
         console.log(formData)
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addmarche/`,fd,{
+            headers: {
+                Authorization: `Token ${Cookies.get("token")}`,
+                'Content-Type': 'application/json',
+
+            },
+
+        })
+            .then((response:any) => {
+
+                setFormData({
+                    code_site:"",
+                    num_nt:"",
+                    libelle : "",
+                    ods_depart: "",
+                    delais:0,
+                    revisable:true,
+                    rabais:0,
+                    tva:0,
+                    num_contrat:"",
+                    date_signature:"",
+                    nouveau:true
+                })
+
+                toast.current?.show({ severity: 'success', summary: 'Marche', detail: String(response.data.message), life: 3000 });
+
+
+            })
+            .catch((error:any) => {
+
+                toast.current?.show({ severity: 'error', summary: 'Marche', detail: String(error.response.data.detail), life: 3000 });
+
+            });
+
+
     }
+
     return (
       <>
+          <PRToast ref={toast} position="top-right" />
           <div className="container-fluid">
               <div className="card shadow mb-3">
                   <div className="card-body">
@@ -112,25 +171,31 @@ const AddMarcheForm: React.FC<any> = () => {
                                                       <div className="mb-3">
                                                           <label className="form-label" >
                                                               <strong>
-                                                                  Numéro d'avenant&nbsp;
+                                                                  Date Signature&nbsp;
                                                                   <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                                               </strong>
-                                                              <br />
-                                                              <br />
+
                                                           </label>
-                                                          <InputNumber className="w-100"  name="avenant"  value={formData.avenant}
-                                                                       min={0} onValueChange={handleInputChange} />
+                                                          <InputText className="w-100"  name="date_signature"  value={formData.date_signature}
+                                                                     type="date"
+                                                                     onChange={handleInputChange} />
                                                       </div>
                                                       <div className="mb-3">
                                                           <label className="form-label" >
                                                               <strong>
-                                                                  Avenant du Marché N°&nbsp;
+                                                                  Nouveau Marché ? &nbsp;
                                                                   <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                                               </strong>
-                                                              <br />
-                                                              <br />
-                                                          </label>
 
+                                                          </label>
+                                                          <PRDropdown
+                                                              className="w-100"
+                                                              id="dropdown"
+                                                              name="nouveau"
+                                                              value={formData.nouveau}
+                                                              options={opt}
+                                                              onChange={handleDropdownChange}
+                                                          />
                                                       </div>
                                                   </div>
                                               </div>
@@ -211,7 +276,7 @@ const AddMarcheForm: React.FC<any> = () => {
                                           </strong>
                                       </label>
                                       <InputNumber className="w-100"  name="tva"  value={formData.tva}
-                                                 onChange={handleInputChange} />
+                                                   onValueChange={handleInputChange} />
                                   </div>
                               </div>
                               <div className="col-md-6">
@@ -226,31 +291,7 @@ const AddMarcheForm: React.FC<any> = () => {
                                                  onChange={handleInputChange} />
                                   </div>
                               </div>
-                              <div className="col-md-6">
-                                  <div className="mb-3">
-                                      <label className="form-label" htmlFor="city">
-                                          <strong>
-                                              Date Signature&nbsp;
-                                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                                          </strong>
-                                      </label>
-                                      <InputText className="w-100"  name="date_signature"  value={formData.date_signature}
-                                                 type="date"
-                                                 onChange={handleInputChange} />
-                                  </div>
-                              </div>
-                              <div className="col">
-                                  <p
-                                      id="emailErrorMsg"
-                                      className="text-danger"
-                                      style={{ display: "none" }}
-                                  />
-                                  <p
-                                      id="passwordErrorMsg"
-                                      className="text-danger"
-                                      style={{ display: "none" }}
-                                  />
-                              </div>
+
                               <div
                                   className="col-md-12"
                                   style={{ textAlign: "right", marginTop: 5 }}
