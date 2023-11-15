@@ -19,6 +19,7 @@ interface FormState {
     delais:number,
     revisable:boolean,
     rabais:number,
+    retenue_garantie:number,
     tva:number,
     num_contrat:string,
     date_signature:string,
@@ -46,6 +47,7 @@ const AddMarcheForm: React.FC<any> = () => {
         num_contrat:"",
         date_signature:"",
         nouveau:true,
+        retenue_garantie:0,
 
     });
 
@@ -84,6 +86,7 @@ const AddMarcheForm: React.FC<any> = () => {
         fd.append("num_contrat",formData.num_contrat);
         fd.append("date_signature",formData.date_signature);
         fd.append("nouveau",formData.nouveau.toString());
+        fd.append('retenue_garantie',formData.retenue_garantie.toString())
         console.log(formData)
         await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addmarche/`,fd,{
             headers: {
@@ -106,7 +109,8 @@ const AddMarcheForm: React.FC<any> = () => {
                     tva:0,
                     num_contrat:"",
                     date_signature:"",
-                    nouveau:true
+                    nouveau:true,
+                    retenue_garantie:0,
                 })
 
                 toast.current?.show({ severity: 'success', summary: 'Marche', detail: String(response.data.message), life: 3000 });
@@ -264,8 +268,16 @@ const AddMarcheForm: React.FC<any> = () => {
                                               Rabais&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                           </strong>
                                       </label>
-                                      <InputNumber className="w-100"  name="rabais"  value={formData.rabais}
-                                                   onValueChange={handleInputChange} />
+                                      <div className="p-inputgroup flex-1">
+                                        <span className="p-inputgroup-addon">
+                                            %
+                                        </span>
+                                          <InputNumber className="w-100"  name="rabais"  value={formData.rabais}
+
+                                                       min={0} max={100}
+                                                       onValueChange={handleInputChange} />
+                                      </div>
+
                                   </div>
                               </div>
                               <div className="col-md-6">
@@ -275,8 +287,17 @@ const AddMarcheForm: React.FC<any> = () => {
                                               TVA&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                           </strong>
                                       </label>
-                                      <InputNumber className="w-100"  name="tva"  value={formData.tva}
-                                                   onValueChange={handleInputChange} />
+                                      <div className="p-inputgroup flex-1">
+                                        <span className="p-inputgroup-addon">
+                                            %
+                                        </span>
+                                          <InputNumber className="w-100"  name="tva"  value={formData.tva}
+
+                                                       min={0} max={100}
+                                                       onValueChange={handleInputChange} />
+                                      </div>
+
+
                                   </div>
                               </div>
                               <div className="col-md-6">
@@ -289,6 +310,28 @@ const AddMarcheForm: React.FC<any> = () => {
                                       </label>
                                       <InputText className="w-100"  name="num_contrat"  value={formData.num_contrat}
                                                  onChange={handleInputChange} />
+                                  </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                  <div className="mb-3">
+                                      <label className="form-label" >
+                                          <strong>
+                                              Retenue de garantie &nbsp;
+                                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                                          </strong>
+                                      </label>
+                                      <div className="p-inputgroup flex-1">
+                                        <span className="p-inputgroup-addon">
+                                            %
+                                        </span>
+                                          <InputNumber className="w-100"  name="retenue_garantie"  value={formData.retenue_garantie}
+                                                       min={0} max={100}
+                                                       onValueChange={handleInputChange} />
+                                      </div>
+                                      
+                                      
+                                      
                                   </div>
                               </div>
 

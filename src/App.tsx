@@ -1,8 +1,8 @@
 import React from 'react';
 import './theme.css';
 import "primeicons/primeicons.css";
-import { PrimeReactProvider } from 'primereact/api';
 import MainPage from "./Pages/MainPage/MainPage";
+import {PrimeReactProvider} from "primereact/api";
 
 
 

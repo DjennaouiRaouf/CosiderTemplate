@@ -1,20 +1,45 @@
-import * as React from "react";
-import {Toast as PRToast} from "primereact/toast";
-import {DataTable} from "primereact/datatable";
-import {Column} from "primereact/column";
-import {useEffect, useRef, useState} from "react";
+
+import React, { useState, useEffect, useRef } from 'react';
+import { DataTable, DataTableExpandedRows, DataTableRowEvent, DataTableValueArray } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+
+import { Rating } from 'primereact/rating';
+import { Button } from 'primereact/button';
+import { Tag } from 'primereact/tag';
+import {Toast as PRToast, Toast} from 'primereact/toast';
 import axios from "axios";
 import Cookies from "js-cookie";
 import {classNames} from "primereact/utils";
 
-type MarcheListProps = {
-  //
-};
+interface Order {
+    id: string;
+    productCode: string;
+    date: string;
+    amount: number,
+    quantity: number,
+    customer: string;
+    status: string;
+}
 
+interface Product {
+    id: string;
+    code: string;
+    name: string;
+    description: string;
+    image: string;
+    price: number;
+    category: string;
+    quantity: number;
+    inventoryStatus: string;
+    rating: number;
+    avenants?: Order[];
+}
 
-const MarcheList: React.FC<any> = () => {
-    const toast = useRef<PRToast>(null);
-    const[marches,setMarches]=useState([]);
+export default function MarcheList() {
+    const [marches, setMarches] = useState<any[]>([]);
+    const [expandedRows, setExpandedRows] = useState<any>(undefined);
+    const toast = useRef<Toast>(null);
+
     const getMarche = async() => {
         await axios.get(`${process.env.REACT_APP_API_BASE_URL}/sm/getmarche/`,{
             headers: {
@@ -27,38 +52,99 @@ const MarcheList: React.FC<any> = () => {
             .catch((error) => {
 
             });
-      
+
     }
     useEffect(() => {
-    getMarche();
-    },[]);
+        getMarche();
+    }, []);
 
-    const cosiderClientBodyTemplate= (rowData: any) => {
-        console.log(rowData)
-        return <i className={classNames('pi', { 'pi-check-circle text-success': rowData.nt.code_client.est_client_cosider, 'pi-times-circle text-danger': !rowData.nt.code_client.est_client_cosider })}></i>;
+    const onRowExpand = (event: DataTableRowEvent) => {
     };
-    const cosiderRevisableBodyTemplate= (rowData: any) => {
+
+    const onRowCollapse = (event: DataTableRowEvent) => {
+    };
+
+    const expandAll = () => {
+
+    };
+
+    const collapseAll = () => {
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const allowExpansion = (rowData: Product) => {
+        return rowData.avenants!.length > 0;
+    };
+    const revisableBodyTemplate= (rowData: any) => {
         return <i className={classNames('pi', { 'pi-check-circle text-success': rowData.revisable, 'pi-times-circle text-danger': !rowData.revisable })}></i>;
     };
+    const rowExpansionTemplate = (data: Product) => {
 
-  return (
-      <>
-          <>
-              <PRToast ref={toast} position="top-right" />
-              <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
+        return (
+            <div className="p-3">
+                <DataTable sortMode="multiple" selectionMode="single"  columnResizeMode="expand" resizableColumns   value={data.avenants} tableStyle={{ minWidth: '50rem' }}>
+                    <Column field="num_avenant" header="Num Avenant"  />
+                    <Column field="revisable" header="Revisable" bodyClassName="text-center" style={{ minWidth: '100px' }} body={revisableBodyTemplate}  />
+                    <Column field="rabais" header="Rabais"   />
+                    <Column field="tva" header="TVA"  />
+                    <Column field="ods_depart" header="ODS Depart"  />
+                    <Column field="code_contrat" header="Code Contrat"  />
+                    <Column field="ht" header="HT"  />
+                    <Column field="ttc" header="TTC"  />
+                </DataTable>
+            </div>
+        );
+    };
 
-                  <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
-                      <div className="card-body">
-                          <DataTable value={marches} sortMode="multiple"  columnResizeMode="expand" resizableColumns  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-                              <Column field="nt.code_site.code_site" header="Code Site" ></Column>
-                              <Column field="revisable" header="Revisable" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderRevisableBodyTemplate}  ></Column>
-                          </DataTable>
-                      </div>
-                  </div>
-              </div>
-          </>
-      </>
-  );
-};
+    const header = (
+        <div className="flex flex-wrap justify-content-end gap-2">
+            <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} text />
+            <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} text />
+        </div>
+    );
 
-export default MarcheList;
+    return (
+        <>
+            <PRToast ref={toast} position="top-right" />
+            <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
+
+                <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
+                    <div className="card-body">
+
+            <DataTable  columnResizeMode="expand"  selectionMode="single" resizableColumns  value={marches} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
+                       onRowExpand={onRowExpand} onRowCollapse={onRowCollapse} rowExpansionTemplate={rowExpansionTemplate}
+                       dataKey="id"  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]}  tableStyle={{ minWidth: '50rem' }}>
+                <Column expander={allowExpansion} style={{ width: '5rem' }} />
+                <Column field="nt.code_site.code_site" header="Code Site"  />
+                <Column field="nt.nt" header="Numero Travail"  />
+                <Column field="nt.code_client.code_client" header="Code Client"  />
+                <Column field="nbr_avenant" header="Nbr avenant"  />
+                <Column field="revisable" header="Revisable" bodyClassName="text-center" style={{ minWidth: '100px' }} body={revisableBodyTemplate}   />
+                <Column field="rabais" header="Rabais"   />
+                <Column field="tva" header="TVA"  />
+                <Column field="ods_depart" header="ODS Depart"  />
+                <Column field="code_contrat" header="Code Contrat"  />
+                <Column field="ht" header="HT"  />
+                <Column field="ttc" header="TTC"  />
+
+            </DataTable>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+        

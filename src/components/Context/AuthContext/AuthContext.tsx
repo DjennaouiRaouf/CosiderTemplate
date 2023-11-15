@@ -1,6 +1,7 @@
 import {createContext, ReactNode, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import axios from "axios";
 
 type Props = {
   children?: ReactNode;
@@ -23,11 +24,13 @@ const AuthProvider = ({children}: Props) => {
   const [ authenticated, setAuthenticated ] = useState(initialValue.authenticated)
 
   const navigate = useNavigate()
+
   useEffect(() => {
     const token:any=Cookies.get("token");
-    setAuthenticated(token)
-    console.log(authenticated)
-  });
+    if(token){
+      setAuthenticated(token)
+    }
+  },[authenticated]);
 
   return (
       <AuthContext.Provider value={{authenticated, setAuthenticated}}>
