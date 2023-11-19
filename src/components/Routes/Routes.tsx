@@ -11,6 +11,7 @@ import SiteList from "../Site/SiteList/SiteList";
 import {AuthContext} from "../Context/AuthContext/AuthContext";
 import AddMarcheForm from "../Marche/AddMarcheForm/AddMarcheForm";
 import MarcheList from "../Marche/MarcheList/MarcheList"
+import AddDQEForm from "../Marche/DQE/AddDQEForm/AddDQEForm";
 
 
 
@@ -34,7 +35,7 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated ? (
                       <>
-                          <NavigationBar />
+
                           <Home/>
 
                       </>
@@ -48,7 +49,7 @@ const Routes: React.FC<any> = () => {
               element={
                    authenticated ? (
                        <>
-                           <NavigationBar />
+
                             <AddClientForm />
                        </>
                   ): (
@@ -61,7 +62,7 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated? (
                       <>
-                          <NavigationBar />
+
                           <ClientList />
                       </>
                   ): (
@@ -74,7 +75,7 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated ? (
                       <>
-                          <NavigationBar />
+
                           <AddSiteForm />
                       </>
                   ): (
@@ -87,7 +88,7 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated ? (
                       <>
-                          <NavigationBar />
+
                           <SiteList />
                       </>
                   ): (
@@ -100,7 +101,7 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated ? (
                       <>
-                          <NavigationBar />
+
                           <AddMarcheForm />
                       </>
                   ): (
@@ -113,8 +114,21 @@ const Routes: React.FC<any> = () => {
               element={
                   authenticated ? (
                       <>
-                          <NavigationBar />
+
                           <MarcheList />
+                      </>
+                  ): (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          <Route
+              path="/ajout_dqe"
+              element={
+                  authenticated ? (
+                      <>
+
+                          <AddDQEForm />
                       </>
                   ): (
                       <Navigate to="/"  />

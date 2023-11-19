@@ -132,7 +132,7 @@ const LoginForm: React.FC<any> = () => {
 
                 </div>
 
-                <PRButton type="submit" className="w-100" style={{ background: "#df162c", borderWidth: 0 }} label="Connexion"  />
+                <PRButton type="submit" className="w-100" style={{ background: "#df162c", borderWidth: 0 }} label="Connexion" size="small"  />
                 <hr className="my-4" />
 
               </form>

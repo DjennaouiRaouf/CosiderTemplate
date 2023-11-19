@@ -13,7 +13,7 @@ import {classNames} from "primereact/utils";
 
 interface Order {
     id: string;
-    productCode: string;
+    anyCode: string;
     date: string;
     amount: number,
     quantity: number,
@@ -21,19 +21,7 @@ interface Order {
     status: string;
 }
 
-interface Product {
-    id: string;
-    code: string;
-    name: string;
-    description: string;
-    image: string;
-    price: number;
-    category: string;
-    quantity: number;
-    inventoryStatus: string;
-    rating: number;
-    avenants?: Order[];
-}
+
 
 export default function MarcheList() {
     const [marches, setMarches] = useState<any[]>([]);
@@ -85,13 +73,14 @@ export default function MarcheList() {
 
 
 
-    const allowExpansion = (rowData: Product) => {
+    const allowExpansion = (rowData: any) => {
         return rowData.avenants!.length > 0;
     };
+
     const revisableBodyTemplate= (rowData: any) => {
         return <i className={classNames('pi', { 'pi-check-circle text-success': rowData.revisable, 'pi-times-circle text-danger': !rowData.revisable })}></i>;
     };
-    const rowExpansionTemplate = (data: Product) => {
+    const rowExpansionTemplate = (data: any) => {
 
         return (
             <div className="p-3">
@@ -118,32 +107,47 @@ export default function MarcheList() {
 
     return (
         <>
+
+
             <PRToast ref={toast} position="top-right" />
-            <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
-                <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
-                    <div className="card-body">
 
-            <DataTable  columnResizeMode="expand"  selectionMode="single" resizableColumns  value={marches} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
-                       onRowExpand={onRowExpand} onRowCollapse={onRowCollapse} rowExpansionTemplate={rowExpansionTemplate}
-                       dataKey="id"  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]}  tableStyle={{ minWidth: '50rem' }}>
-                <Column expander={allowExpansion} style={{ width: '5rem' }} />
-                <Column field="nt.code_site.code_site" header="Code Site"  />
-                <Column field="nt.nt" header="Numero Travail"  />
-                <Column field="nt.code_client.code_client" header="Code Client"  />
-                <Column field="nbr_avenant" header="Nbr avenant"  />
-                <Column field="revisable" header="Revisable" bodyClassName="text-center" style={{ minWidth: '100px' }} body={revisableBodyTemplate}   />
-                <Column field="rabais" header="Rabais"   />
-                <Column field="tva" header="TVA"  />
-                <Column field="ods_depart" header="ODS Depart"  />
-                <Column field="code_contrat" header="Code Contrat"  />
-                <Column field="ht" header="HT"  />
-                <Column field="ttc" header="TTC"  />
+            <div className="container-fluid">
+                <h3 className="text-dark mb-4">Marchés</h3>
+                <div className="card shadow">
+                    <div className="card-body" style={{height:"800px"}}>
+                        <div className="row" />
+                        <div
+                            id="dataTable"
+                            className="table-responsive table mt-2"
+                            role="grid"
+                            aria-describedby="dataTable_info"
+                        >
+                            <DataTable  columnResizeMode="expand"  selectionMode="single" resizableColumns  value={marches} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
+                                        onRowExpand={onRowExpand} onRowCollapse={onRowCollapse} rowExpansionTemplate={rowExpansionTemplate}
+                                        dataKey="id"  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]}  tableStyle={{ minWidth: '50rem' }}>
+                                <Column expander={allowExpansion} style={{ width: '5rem' }} />
+                                <Column field="nt.code_site.code_site" header="Code Site"  />
+                                <Column field="nt.nt" header="Numero Travail"  />
+                                <Column field="nt.code_client.code_client" header="Code Client"  />
+                                <Column field="nbr_avenant" header="Nbr avenant"  />
+                                <Column field="revisable" header="Revisable" bodyClassName="text-center" style={{ minWidth: '100px' }} body={revisableBodyTemplate}   />
+                                <Column field="rabais" header="Rabais"   />
+                                <Column field="tva" header="TVA"  />
+                                <Column field="ods_depart" header="ODS Depart"  />
+                                <Column field="code_contrat" header="Code Contrat"  />
+                                <Column field="ht" header="HT"  />
+                                <Column field="ttc" header="TTC"  />
 
-            </DataTable>
+                            </DataTable>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+
+
         </>
     );
 }

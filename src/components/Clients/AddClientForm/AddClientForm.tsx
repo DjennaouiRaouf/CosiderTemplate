@@ -107,157 +107,163 @@ return (
     <>
       <PRToast ref={toast} position="top-right" />
 
-      <div className="container-fluid" style={{marginTop:"20px" , width:"100%"}}>
 
-      <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
-        <div className="card-body">
-          <form onSubmit={handleSubmit} >
-            <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
-              <div
-                  className="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
-                  style={{ display: "inline", textAlign: "center", marginBottom: 25 }}
-              >
-                <div
-                    style={{
-                      height: "100%",
-                      background: `url(${usr}) center / auto no-repeat`,
+            <div className="container-fluid" style={{marginTop:"20px" , width:"100%"}}>
 
-                    }}
-                />
-                <br />
-              </div>
-              <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
-                <div className="row">
-                  <div className="row">
-                    <div className="col-md-12 text-start">
-                      <div className="mb-3">
-                        <h1 className="text-center">Ajouter un Client</h1>
+              <div className="card shadow mb-3" style={{border:"none",background:"transparent"}}>
+                <div className="card-body">
+                  <form onSubmit={handleSubmit} >
+                    <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
+                      <div
+                          className="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+                          style={{ display: "inline", textAlign: "center", marginBottom: 25 }}
+                      >
+                        <div
+                            style={{
+                              height: "100%",
+                              background: `url(${usr}) center / auto no-repeat`,
+
+                            }}
+                        />
+                        <br />
+                      </div>
+                      <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
+                        <div className="row">
+                          <div className="row">
+                            <div className="col-md-12 text-start">
+                              <div className="mb-3">
+                                <h1 className="text-center">Ajouter un Client</h1>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-12 text-start">
+                            <div className="mb-3">
+                              <label className="form-label" >
+                                <strong>
+                                  Code Client{" "}
+                                  <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                                </strong>
+                              </label>
+                              <InputText className="w-100"  name="Code_Client"  value={formData.Code_Client}
+                                         onChange={handleInputChange} />
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div className="col-md-6 text-start">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              Libelle{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <InputText  className="w-100"  name="Libelle_Client"
+                                      value={formData.Libelle_Client}
+                                      onChange={handleInputChange} />
+
+                        </div>
+                      </div>
+                      <div className="col-md-6 text-start">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              NIF{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <InputText  className="w-100"  name="NIF"
+                                      value={formData.NIF}
+                                      onChange={handleInputChange} />
+
+
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              Est Client cosider{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <PRDropdown
+                              className="w-100"
+                              id="dropdown"
+                              name="Cosider_Client"
+                              value={formData.Cosider_Client}
+                              options={opt}
+                              onChange={handleDropdownChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              Type{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <InputText className="w-100"   name="Type_Client"
+                                     type='number'
+                                     value={formData.Type_Client}
+                                     onChange={handleInputChange} />
+
+
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              Raison social{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <InputText className="w-100" placeholder="Raison Social"  name="Raison_Social"
+                                     value={formData.Raison_Social}
+                                     onChange={handleInputChange} />
+
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label className="form-label" >
+                            <strong>
+                              Numero Registre Commerce{" "}
+                              <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                            </strong>
+                          </label>
+                          <InputText className="w-100"  name="Numero_Registre_Commerce"
+                                     value={formData.Numero_Registre_Commerce}
+                                     onChange={handleInputChange} />
+
+                        </div>
+                      </div>
+
+                      <div
+                          className="col-md-12"
+                          style={{ textAlign: "right", marginTop: 5 }}
+                      >
+                        <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" size="small"
+                                   icon={
+                                     <i className="fas fa-user-plus" style={{marginRight:"10px"}}></i>}/>
+
                       </div>
                     </div>
-                  </div>
-
-                  <div className="col-md-12 text-start">
-                    <div className="mb-3">
-                      <label className="form-label" >
-                        <strong>
-                          Code Client{" "}
-                          <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                        </strong>
-                      </label>
-                             <InputText className="w-100"  name="Code_Client"  value={formData.Code_Client}
-                                        onChange={handleInputChange} />
-
-                    </div>
-                  </div>
-
+                  </form>
                 </div>
-              </div>
-              <div className="col-md-6 text-start">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      Libelle{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                             <InputText  className="w-100"  name="Libelle_Client"
-                                         value={formData.Libelle_Client}
-                                         onChange={handleInputChange} />
-
-                </div>
-              </div>
-              <div className="col-md-6 text-start">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      NIF{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                             <InputText  className="w-100"  name="NIF"
-                                         value={formData.NIF}
-                                         onChange={handleInputChange} />
-
-
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      Est Client cosider{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                  <PRDropdown
-                      className="w-100"
-                      id="dropdown"
-                      name="Cosider_Client"
-                      value={formData.Cosider_Client}
-                      options={opt}
-                      onChange={handleDropdownChange}
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      Type{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                             <InputText className="w-100"   name="Type_Client"
-                                        type='number'
-                                        value={formData.Type_Client}
-                                         onChange={handleInputChange} />
-
-
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      Raison social{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                           <InputText className="w-100" placeholder="Raison Social"  name="Raison_Social"
-                                          value={formData.Raison_Social}
-                                          onChange={handleInputChange} />
-
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label" >
-                    <strong>
-                      Numero Registre Commerce{" "}
-                      <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                    </strong>
-                  </label>
-                             <InputText className="w-100"  name="Numero_Registre_Commerce"
-                                          value={formData.Numero_Registre_Commerce}
-                                          onChange={handleInputChange} />
-
-                </div>
-              </div>
-
-              <div
-                  className="col-md-12"
-                  style={{ textAlign: "right", marginTop: 5 }}
-              >
-                <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded
-                           icon={
-                             <i className="fas fa-user-plus" style={{marginRight:"10px"}}></i>}/>
-
               </div>
             </div>
-          </form>
-        </div>
-      </div>
-      </div>
+            
+
+      
+      
+
     </>
 
 

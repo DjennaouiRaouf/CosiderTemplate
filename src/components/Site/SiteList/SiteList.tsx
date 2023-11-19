@@ -45,34 +45,46 @@ const SiteList: React.FC<any> = () => {
   },[sites]);
 
 
-  // press  win  and click on header to multiple sorting
+
   return (
       <>
         <PRToast ref={toast} position="top-right" />
-      <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
-        <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
-          <div className="card-body">
-            <DataTable value={sites} sortMode="multiple"  columnResizeMode="expand" resizableColumns  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-              <Column field="code_site" header="code_site" sortable ></Column>
-              <Column field="code_filiale" header="code_filiale" sortable ></Column>
-              <Column field="code_region" header="code_region"  ></Column>
-              <Column field="libelle_site" header="libelle_site" sortable ></Column>
-              <Column field="code_agence" header="code_agence"  ></Column>
-
-              <Column field="type_site" header="type_site" sortable ></Column>
-              <Column field="code_division" header="code_division" sortable ></Column>
-              <Column field="code_commune_site" header="code_commune_site" sortable ></Column>
-              <Column field="jour_cloture_mouv_rh_paie" header="jour_cloture_mouv_rh_paie" sortable ></Column>
-              <Column field="date_ouverture_site" header="date_ouverture_site" sortable ></Column>
-              <Column field="date_cloture_site" header="date_cloture_site" sortable ></Column>
+        <div className="container-fluid">
+          <h3 className="text-dark mb-4">Sites</h3>
+          <div className="card shadow">
+            <div className="card-body">
 
 
+              <div
+                  id="dataTable"
+                  className="table-responsive table mt-2"
+                  role="grid"
+                  aria-describedby="dataTable_info"
+                  style={{height:"800px" }}
+              >
+                <DataTable value={sites} sortMode="multiple"  columnResizeMode="expand" resizableColumns  paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+                  <Column field="code_site" header="code_site" sortable ></Column>
+                  <Column field="code_filiale" header="code_filiale" sortable ></Column>
+                  <Column field="code_region" header="code_region"  ></Column>
+                  <Column field="libelle_site" header="libelle_site" sortable ></Column>
+                  <Column field="code_agence" header="code_agence"  ></Column>
 
-            </DataTable>
+                  <Column field="type_site" header="type_site" sortable ></Column>
+                  <Column field="code_division" header="code_division" sortable ></Column>
+                  <Column field="code_commune_site" header="code_commune_site" sortable ></Column>
+                  <Column field="jour_cloture_mouv_rh_paie" header="jour_cloture_mouv_rh_paie" sortable ></Column>
+                  <Column field="date_ouverture_site" header="date_ouverture_site" sortable ></Column>
+                  <Column field="date_cloture_site" header="date_cloture_site" sortable ></Column>
+
+
+
+                </DataTable>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+
       </>
 
 

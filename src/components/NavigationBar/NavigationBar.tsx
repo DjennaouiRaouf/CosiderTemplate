@@ -66,7 +66,7 @@ const NavigationBar: React.FC<any> = () => {
 
 
   return (
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
         <Container >
           <Navbar.Brand>
               <span>
@@ -107,14 +107,16 @@ const NavigationBar: React.FC<any> = () => {
                       data-bs-toggle="dropdown"
                       href="#"
                   >
-                      <span className="d-none d-lg-inline me-2 text-gray-600 small">
-                        {username}
-                      </span>
-                    <Avatar name={username} size="50" round={true} src={""}
+                    <span className="d-none d-lg-inline me-2 text-gray-600 small">
+                       {username}
+                    </span>
+
+                    <Avatar name={username} size="32" round={true} src={""}
 
                     />
                   </a>
-                  <div className="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                  <div  className="dropdown-menu shadow dropdown-menu-end animated--grow-in"
+                        data-bs-popper="none">
                     <a className="dropdown-item" href="#">
                       <i className="fas fa-user fa-sm fa-fw me-2 text-gray-400" />
                       &nbsp;Profile

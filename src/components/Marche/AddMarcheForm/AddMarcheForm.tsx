@@ -130,7 +130,7 @@ const AddMarcheForm: React.FC<any> = () => {
       <>
           <PRToast ref={toast} position="top-right" />
           <div className="container-fluid">
-              <div className="card shadow mb-3">
+              <div className="card shadow mb-3" style={{border:"none",background:"transparent"}}>
                   <div className="card-body">
                       <form onSubmit={submit}>
                           <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
@@ -152,6 +152,13 @@ const AddMarcheForm: React.FC<any> = () => {
                                       <div className="col-md-12 text-start">
                                           <div className="mb-3">
                                               <div className="row">
+                                                  <div className="row">
+                                                      <div className="col-md-12 text-start">
+                                                          <div className="mb-5">
+                                                              <h1 className="text-center">Ajouter un Site</h1>
+                                                          </div>
+                                                      </div>
+                                                  </div>
                                                   <div className="col">
                                                       <div className="mb-3">
                                                           <label className="form-label" >
@@ -339,7 +346,7 @@ const AddMarcheForm: React.FC<any> = () => {
                                   className="col-md-12"
                                   style={{ textAlign: "right", marginTop: 5 }}
                               >
-                                  <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded
+                                  <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" size="small"
                                              icon={
                                                  <i className="fas fa-plus" style={{marginRight:"10px"}}></i>}/>
 

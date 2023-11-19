@@ -110,7 +110,7 @@ const AddSiteForm: React.FC<any> = () => {
 
         <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
 
-          <div className="card shadow mb-3" style={{ background: "#f8f9fa" }}>
+          <div className="card shadow mb-3" style={{border:"none",background:"transparent"}}>
             <div className="card-body">
               <form onSubmit={handleSubmit} >
                 <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
@@ -261,7 +261,7 @@ const AddSiteForm: React.FC<any> = () => {
                       className="col-md-12"
                       style={{ textAlign: "right", marginTop: 5 }}
                   >
-                    <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded
+                    <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" size="small"
                                icon={
                                  <i className="fas fa-plus" style={{marginRight:"10px"}}></i>} />
 

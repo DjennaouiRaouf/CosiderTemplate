@@ -62,60 +62,64 @@ const ClientList: React.FC<any> = () => {
   return (
       <>
       <PRToast ref={toast} position="top-right" />
-      <div className="container-fluid" style={{marginTop:"20px", width:"100%"}}>
+          <div className="container-fluid">
+              <h3 className="text-dark mb-4">Clients</h3>
+              <div className="card shadow">
+                  <div className="card-body">
+                      <div className="row d-xl-flex justify-content-xl-center">
+                          {Object.keys(countByCC).map((c) => (
+                              <div  key={c}className="col-md-6 col-xl-3 mb-4">
+                                  <div className="card shadow border-start-primary py-2">
+                                      <div className="card-body">
+                                          <div className="row align-items-center no-gutters">
+                                              <div className="col me-2">
+                                                  <div className="text-uppercase text-primary fw-bold text-xs mb-1">
+                                                      {
+                                                          c === "true" ?
+                                                              <span> client interne</span>
+                                                              :
+                                                              <span> client externe </span>
+                                                      }
 
-          <div className="card shadow mb-3" style={{ background: "#f8f9fa",height:"800px" }}>
-              <div className="card-body">
-                  <div className="row d-xl-flex justify-content-xl-center">
-                      {Object.keys(countByCC).map((c) => (
-                          <div  key={c}className="col-md-6 col-xl-3 mb-4">
-                              <div className="card shadow border-start-primary py-2">
-                                  <div className="card-body">
-                                      <div className="row align-items-center no-gutters">
-                                          <div className="col me-2">
-                                              <div className="text-uppercase text-primary fw-bold text-xs mb-1">
-                                                  {
-                                                      c === "true" ?
-                                                          <span> client interne</span>
-                                                          :
-                                                          <span> client externe </span>
-                                                  }
-
+                                                  </div>
+                                                  <div className="text-dark fw-bold h5 mb-0">
+                                                      <span>{countByCC[c]}</span>
+                                                  </div>
                                               </div>
-                                              <div className="text-dark fw-bold h5 mb-0">
-                                                  <span>{countByCC[c]}</span>
+                                              <div className="col-auto">
+                                                  <i className="fas fa-user fa-2x text-gray-300" />
                                               </div>
-                                          </div>
-                                          <div className="col-auto">
-                                              <i className="fas fa-user fa-2x text-gray-300" />
                                           </div>
                                       </div>
                                   </div>
                               </div>
-                          </div>
 
 
 
 
-                      ))}
+                          ))}
 
 
 
+
+                      </div>
+                      <div id="dataTable" className="table-responsive table mt-2" role="grid"
+                           aria-describedby="dataTable_info" style={{height:"800px"}}>
+                          <DataTable value={clients}  sortMode="multiple"  columnResizeMode="expand" resizableColumns paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
+                              <Column field="code_client" header="Code" sortable ></Column>
+                              <Column field="type_client" header="Type" sortable ></Column>
+                              <Column field="libelle_client" header="Libelle"  ></Column>
+                              <Column field="nif" header="nif"  ></Column>
+                              <Column field="raison_social" header="Raison social" sortable ></Column>
+                              <Column field="num_registre_commerce" header="Registre commerce" sortable ></Column>
+                              <Column field="est_client_cosider" header="Cosider Client" sortable dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
+                          </DataTable>
+                      </div>
 
                   </div>
-
-                  <DataTable value={clients}  sortMode="multiple"  columnResizeMode="expand" resizableColumns paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-                      <Column field="code_client" header="Code" sortable ></Column>
-                      <Column field="type_client" header="Type" sortable ></Column>
-                      <Column field="libelle_client" header="Libelle"  ></Column>
-                      <Column field="nif" header="nif"  ></Column>
-                      <Column field="raison_social" header="Raison social" sortable ></Column>
-                      <Column field="num_registre_commerce" header="Registre commerce" sortable ></Column>
-                      <Column field="est_client_cosider" header="Cosider Client" sortable dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
-                  </DataTable>
               </div>
           </div>
-      </div>
+
       </>
 
 

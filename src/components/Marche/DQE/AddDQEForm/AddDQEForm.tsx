@@ -1,37 +1,32 @@
 import * as React from "react";
-import {Button as PRButton} from "primereact/button";
-import {Dropdown as PRDropdown} from "primereact/dropdown";
-import {useEffect, useRef, useState} from "react";
+import {Toast as PRToast} from "primereact/toast";
+import contrat from "../../AddMarcheForm/contract.png";
 import {InputText} from "primereact/inputtext";
+import {Dropdown as PRDropdown} from "primereact/dropdown";
 import {InputNumber} from "primereact/inputnumber";
-import contrat from './contract.png'
+import {Button as PRButton} from "primereact/button";
+import {useRef, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {Toast as PRToast} from "primereact/toast";
-import {InputSwitch} from "primereact/inputswitch";
-import {Console} from "inspector";
 
-interface FormState {
-  code_site:string,
-  num_nt:string,
-  num_avenant:number,
-  unite:string,
+interface FormState{
+  site:string,
+  nt:string,
+  avenant:number,
+  designation : string,
+  unite: string,
   prix_u:number,
   quantite:number,
-
-
 }
-
-
-
 
 const AddDQEForm: React.FC<any> = () => {
   const toast = useRef<PRToast>(null);
   const [formData, setFormData] = useState<FormState>({
-    code_site:"",
-    num_nt:"",
-    num_avenant:0,
-    unite:"",
+    site:"",
+    nt:"",
+    avenant:0,
+    designation : "",
+    unite: "",
     prix_u:0,
     quantite:0,
   });
@@ -41,19 +36,18 @@ const AddDQEForm: React.FC<any> = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
-  const handleDropdownChange = (e:any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: e.value });
-  };
   const submit = async(e:any) => {
     e.preventDefault();
     const fd:FormData=new FormData();
-    fd.append("code_site",formData.code_site);
-    fd.append("num_nt",formData.num_nt);
-
+    fd.append("site",formData.site);
+    fd.append("nt",formData.nt);
+    fd.append("avenant",formData.avenant.toString());
+    fd.append("designation" , formData.designation);
+    fd.append("unite", formData.unite);
+    fd.append("prix_u",formData.prix_u.toString());
+    fd.append("quantite",formData.quantite.toString());
     console.log(formData)
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/addAddDQEForm/`,fd,{
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/sm/adddqe/`,fd,{
       headers: {
         Authorization: `Token ${Cookies.get("token")}`,
         'Content-Type': 'application/json',
@@ -64,32 +58,35 @@ const AddDQEForm: React.FC<any> = () => {
         .then((response:any) => {
 
           setFormData({
-            code_site:"",
-            num_nt:"",
-            num_avenant:0,
-            unite:"",
+            site:"",
+            nt:"",
+            avenant:0,
+            designation : "",
+            unite: "",
             prix_u:0,
             quantite:0,
           })
 
-          toast.current?.show({ severity: 'success', summary: 'AddDQEForm', detail: String(response.data.message), life: 3000 });
+          toast.current?.show({ severity: 'success', summary: 'DQE', detail: String(response.data.message), life: 3000 });
 
 
         })
         .catch((error:any) => {
 
-          toast.current?.show({ severity: 'error', summary: 'Marche', detail: String(error.response.data.detail), life: 3000 });
+          toast.current?.show({ severity: 'error', summary: 'DQE', detail: String(error.response.data.detail), life: 3000 });
 
         });
 
 
   }
 
+
+
   return (
       <>
         <PRToast ref={toast} position="top-right" />
         <div className="container-fluid">
-          <div className="card shadow mb-3">
+          <div className="card shadow mb-3" style={{border:"none",background:"transparent"}}>
             <div className="card-body">
               <form onSubmit={submit}>
                 <div className="row" style={{ marginBottom: 25, textAlign: "left" }}>
@@ -111,6 +108,13 @@ const AddDQEForm: React.FC<any> = () => {
                       <div className="col-md-12 text-start">
                         <div className="mb-3">
                           <div className="row">
+                            <div className="row">
+                              <div className="col-md-12 text-start">
+                                <div className="mb-5">
+                                  <h1 className="text-center">Ajouter un DQE</h1>
+                                </div>
+                              </div>
+                            </div>
                             <div className="col">
                               <div className="mb-3">
                                 <label className="form-label" >
@@ -119,14 +123,14 @@ const AddDQEForm: React.FC<any> = () => {
                                     <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                   </strong>
                                 </label>
-                                <InputText className="w-100"  name="code_site"  value={formData.code_site}
+                                <InputText className="w-100"  name="site"  value={formData.site}
                                            onChange={handleInputChange} />
                               </div>
                               <div className="mb-3">
                                 <label className="form-label" >
                                   <strong>N° du NT</strong>
                                 </label>
-                                <InputText className="w-100"  name="num_nt"  value={formData.num_nt}
+                                <InputText className="w-100"  name="nt"  value={formData.nt}
                                            onChange={handleInputChange} />
                               </div>
                             </div>
@@ -134,32 +138,15 @@ const AddDQEForm: React.FC<any> = () => {
                               <div className="mb-3">
                                 <label className="form-label" >
                                   <strong>
-                                    Date Signature&nbsp;
+                                    Numero d'avenant&nbsp;
                                     <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                                   </strong>
 
                                 </label>
-                                <InputText className="w-100"  name="date_signature"  value={formData.date_signature}
-                                           type="date"
+                                <InputNumber className="w-100"  name="avenant"  value={formData.avenant}
                                            onChange={handleInputChange} />
                               </div>
-                              <div className="mb-3">
-                                <label className="form-label" >
-                                  <strong>
-                                    Nouveau Marché ? &nbsp;
-                                    <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                                  </strong>
 
-                                </label>
-                                <PRDropdown
-                                    className="w-100"
-                                    id="dropdown"
-                                    name="nouveau"
-                                    value={formData.nouveau}
-                                    options={opt}
-                                    onChange={handleDropdownChange}
-                                />
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -170,11 +157,11 @@ const AddDQEForm: React.FC<any> = () => {
                     <div className="mb-3">
                       <label className="form-label" >
                         <strong>
-                          Libellé&nbsp;
+                          Désignation&nbsp;
                           <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                         </strong>
                       </label>
-                      <InputText className="w-100"  name="libelle"  value={formData.libelle}
+                      <InputText className="w-100"  name="designation"  value={formData.designation}
                                  onChange={handleInputChange} />
                     </div>
                   </div>
@@ -182,11 +169,11 @@ const AddDQEForm: React.FC<any> = () => {
                     <div className="mb-3">
                       <label className="form-label" >
                         <strong>
-                          ODS de départ&nbsp;
+                          Unité&nbsp;
                           <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                         </strong>
                       </label>
-                      <InputText  type="date" className="w-100"  name="ods_depart"  value={formData.ods_depart}
+                      <InputText  className="w-100"  name="unite"  value={formData.unite}
                                   onChange={handleInputChange} />
                     </div>
                   </div>
@@ -194,72 +181,40 @@ const AddDQEForm: React.FC<any> = () => {
                     <div className="mb-3">
                       <label className="form-label" >
                         <strong>
-                          Délai&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                          Quantité&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                         </strong>
                       </label>
-                      <InputNumber className="w-100"  name="delais"  value={formData.delais}
+                      <InputNumber className="w-100"  name="quantite"  value={formData.quantite}
                                    min={0} onValueChange={handleInputChange} />
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label" >
-                        <strong>
-                          Est-il révisable&nbsp;
-                          <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                        </strong>
-                      </label>
 
-                      <PRDropdown
-                          className="w-100"
-                          id="dropdown"
-                          name="revisable"
-                          value={formData.revisable}
-                          options={opt}
-                          onChange={handleDropdownChange}
-                      />
-                    </div>
-                  </div>
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label className="form-label" >
                         <strong>
-                          Rabais&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
+                          Prix Unitaire&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
                         </strong>
                       </label>
-                      <InputNumber className="w-100"  name="rabais"  value={formData.rabais}
-                                   onValueChange={handleInputChange} />
+                      <div className="p-inputgroup flex-1">
+                                        <span className="p-inputgroup-addon">
+                                            DZD
+                                        </span>
+                        <InputNumber className="w-100"  name="prix_u"  value={formData.prix_u}
+
+                                     min={0} max={100}
+                                     onValueChange={handleInputChange} />
+                      </div>
+
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        <strong>
-                          TVA&nbsp;<span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                        </strong>
-                      </label>
-                      <InputNumber className="w-100"  name="tva"  value={formData.tva}
-                                   onValueChange={handleInputChange} />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="mb-3">
-                      <label className="form-label" >
-                        <strong>
-                          N° du contrat&nbsp;
-                          <span style={{ color: "rgb(255, 0, 0)" }}>*</span>
-                        </strong>
-                      </label>
-                      <InputText className="w-100"  name="num_contrat"  value={formData.num_contrat}
-                                 onChange={handleInputChange} />
-                    </div>
-                  </div>
+
 
                   <div
                       className="col-md-12"
                       style={{ textAlign: "right", marginTop: 5 }}
                   >
-                    <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" rounded
+                    <PRButton  type="submit" style={{ borderWidth: 0, background: "#d7142a" }} label="Ajouter" size="small"
                                icon={
                                  <i className="fas fa-plus" style={{marginRight:"10px"}}></i>}/>
 
