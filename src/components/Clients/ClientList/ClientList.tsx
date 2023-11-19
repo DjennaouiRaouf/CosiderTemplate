@@ -49,7 +49,6 @@ const ClientList: React.FC<any> = () => {
       <>
       <PRToast ref={toast} position="top-right" />
           <div className="container-fluid">
-              <h3 className="text-dark mb-4">Clients</h3>
               <div className="card shadow">
                   <div className="card-body">
                       <div id="dataTable" className="table-responsive table mt-2" role="grid"

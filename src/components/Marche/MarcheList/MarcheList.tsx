@@ -113,7 +113,6 @@ export default function MarcheList() {
 
 
             <div className="container-fluid">
-                <h3 className="text-dark mb-4">Marchés</h3>
                 <div className="card shadow">
                     <div className="card-body" style={{height:"800px"}}>
                         <div className="row" />
