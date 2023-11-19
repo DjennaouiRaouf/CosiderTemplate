@@ -55,13 +55,13 @@ const ClientList: React.FC<any> = () => {
                       <div id="dataTable" className="table-responsive table mt-2" role="grid"
                            aria-describedby="dataTable_info" style={{height:"800px"}}>
                           <DataTable value={clients}  sortMode="multiple"  columnResizeMode="expand" resizableColumns paginator rows={20} rowsPerPageOptions={[20, 40, 60, 80,100]} tableStyle={{ minWidth: '50rem' }} >
-                              <Column field="code_client" header="Code" sortable ></Column>
-                              <Column field="type_client" header="Type" sortable ></Column>
+                              <Column field="code_client" header="Code"  ></Column>
+                              <Column field="type_client" header="Type"  ></Column>
                               <Column field="libelle_client" header="Libelle"  ></Column>
                               <Column field="nif" header="nif"  ></Column>
-                              <Column field="raison_social" header="Raison social" sortable ></Column>
-                              <Column field="num_registre_commerce" header="Registre commerce" sortable ></Column>
-                              <Column field="est_client_cosider" header="Cosider Client" sortable dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
+                              <Column field="raison_social" header="Raison social"  ></Column>
+                              <Column field="num_registre_commerce" header="Registre commerce"  ></Column>
+                              <Column field="est_client_cosider" header="Cosider Client"  dataType="boolean" bodyClassName="text-center" style={{ minWidth: '100px' }} body={cosiderClientBodyTemplate}  />
                           </DataTable>
                       </div>
 
